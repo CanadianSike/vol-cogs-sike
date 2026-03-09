@@ -1,13 +1,22 @@
+from redbot.core import commands, app_commands 
 import discord
 
-from redbot.core import commands, app_commands 
 
-class carinfo(commands.Cog):
+# Classname should be CamelCase and the same spelling as the folder
+class CarInfo(commands.Cog):
     """Cog for keeping track of mods and tune revision(s) per user"""
     def __init__(self, bot):
         self.bot = bot
 
-class Modelbutton(discord.ui.View): #Class for storing model buttons, will be used for car_attributes.
+    @app_commands.command()
+    @app_commands.guild_only()
+    async def carinfo(self, ctx):
+        view=ModelButton()
+        """Command for users to input their car information"""
+        await ctx.response.send_message("Please enter your car information via the buttons.", ephemeral=True)
+        await ctx.send("Please select your car model:", view=ModelButton(view=view))
+
+class ModelButton(discord.ui.View): #Class for storing model buttons, will be used for car_attributes.
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         await interaction.response.edit_message(view=self)
@@ -38,11 +47,3 @@ class Modelbutton(discord.ui.View): #Class for storing model buttons, will be us
     @discord.ui.button(label="Mazda CX-90", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         await interaction.response.edit_message(view=self)
-
-    @app_commands.command()
-    @app_commands.guild_only()
-    async def carinfo(self, ctx):
-        view=Modelbutton()
-        """Command for users to input their car information"""
-        await ctx.response.send_message("Please enter your car information via the buttons.", ephemeral=True)
-        await ctx.send("Please select your car model:", view=Modelbutton(view=view))
