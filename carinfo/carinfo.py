@@ -7,7 +7,7 @@ class carinfo(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-class modelbutton(discord.ui.View): #Class for storing model buttons, will be used for car_attributes.
+class Modelbutton(discord.ui.View): #Class for storing model buttons, will be used for car_attributes.
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         await interaction.response.edit_message(view=self)
@@ -42,7 +42,7 @@ class modelbutton(discord.ui.View): #Class for storing model buttons, will be us
     @app_commands.command()
     @app_commands.guild_only()
     async def carinfo(self, ctx):
+        view=Modelbutton()
         """Command for users to input their car information"""
         await ctx.response.send_message("Please enter your car information via the buttons.", ephemeral=True)
-        await ctx.send("Please select your car model:", view=modelbutton(self.bot))
-        view=modelbutton()
+        await ctx.send("Please select your car model:", view=Modelbutton(view=view))
