@@ -47,7 +47,7 @@ class modelbutton(discord.ui.View): #Class for storing model buttons, will be us
     def __init__(self, bot):
         self.bot = bot
         
-    @app_commands.commands.command()
+    @app_commands.command()
     @app_commands.guild_only()
     async def carinfo(self, ctx):
         """Command for users to input their car information"""
