@@ -8,7 +8,7 @@ class CarInfo(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command()
+    @commands.command()
     async def carinfo(self, ctx):
         """Command for users to input their car information"""
         await ctx.response.send_message("Please enter your car information via the buttons.", ephemeral=True)
