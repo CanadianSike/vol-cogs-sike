@@ -9,8 +9,7 @@ class CarInfo(commands.Cog):
         self.bot = bot
 
     @app_commands.command()
-    @app_commands.guild_only()
-    async def carinfo(self, ctx):
+    async def info(self, ctx):
         view=ModelButton()
         """Command for users to input their car information"""
         await ctx.response.send_message("Please enter your car information via the buttons.", ephemeral=True)
