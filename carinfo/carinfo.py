@@ -4,13 +4,8 @@ from redbot.core import commands, app_commands
 
 class carinfo(commands.Cog):
     """Cog for keeping track of mods and tune revision(s) per user"""
-    car_attributes = ["Model", "Year", "Trim", "Engine", "Transmission", "Drivetrain", "Mods"]
-    model = ["Mazda 2", "Mazda 3", "Mazda 5", "Mazda 6", "Mazda CX-3", "Mazda CX-5", "Mazda CX-9", "Mazda CX-30", "Mazda-CX50", "Mazda-CX90" "Miata"]
-    year = int == range(1990, 2025)
-    trim = str
-    engine = [1.5, 2.0, 2.2, 2.5, 3.3]
-    transmission = ["Automatic", "Manual"]
-    drivetrain = ["FWD", "RWD", "AWD"]
+    def __init__(self, bot):
+        self.bot = bot
 
 class modelbutton(discord.ui.View): #Class for storing model buttons, will be used for car_attributes.
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
@@ -43,10 +38,7 @@ class modelbutton(discord.ui.View): #Class for storing model buttons, will be us
     @discord.ui.button(label="Mazda CX-90", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         await interaction.response.edit_message(view=self)
-    
-    def __init__(self, bot):
-        self.bot = bot
-        
+
     @app_commands.command()
     @app_commands.guild_only()
     async def carinfo(self, ctx):
