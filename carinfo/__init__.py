@@ -1,5 +1,5 @@
-from .carinfo import carinfo
+from .carinfo import CarInfo
 
 
 async def setup(bot):
-    await bot.add_cog(carinfo(bot))
+    await bot.add_cog(CarInfo(bot))
