@@ -13,12 +13,14 @@ class CarInfo(commands.Cog):
         """Command for users to input their car information"""
         await ctx.send("Please select your car model:")
         view=ModelButtons()
+        await ctx.send(view=view)
 
 class ModelButtons(discord.ui.View): #Class for storing model buttons, will be used for car_attributes.
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         button.disabled=True
         await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
+
     @discord.ui.button(label="Mazda 3", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
