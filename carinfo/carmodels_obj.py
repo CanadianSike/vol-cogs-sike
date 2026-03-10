@@ -9,9 +9,9 @@ class ModelButtons(discord.ui.View):
     # Mazda 2 Button
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
     async def mazda2_callback(self, button, interaction):
-        await interaction.response.send_message(f"You selected Mazda 2!", ephemeral=True)
+        await interaction.response.send_message("You selected Mazda 2!", ephemeral=True)
     # Mazda 3 Button
     @discord.ui.button(label="Mazda 3", style=discord.ButtonStyle.primary)
     async def mazda3_callback(self, button, interaction):
-        await interaction.response.send_message(f"You selected Mazda 3!", ephemeral=True)
+        await interaction.response.send_message("You selected Mazda 3!", ephemeral=True)
  
