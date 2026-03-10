@@ -26,8 +26,29 @@ class ModelButtons(discord.ui.View): #Class for storing model buttons, will be u
     @discord.ui.button(label="Mazda 6", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
+    @discord.ui.button(label="Mazda CX-3", style=discord.ButtonStyle.primary)
+    async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
+    @discord.ui.button(label="Mazda CX-5", style=discord.ButtonStyle.primary)
+    async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
+    @discord.ui.button(label="Mazda CX-9", style=discord.ButtonStyle.primary)
+    async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
+    @discord.ui.button(label="Mazda CX-30", style=discord.ButtonStyle.primary)
+    async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
+    @discord.ui.button(label="Mazda CX-50", style=discord.ButtonStyle.primary)
+    async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
+    @discord.ui.button(label="Mazda CX-90", style=discord.ButtonStyle.primary)
+    async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
 
-
+    @commands.command()
+    async def buttontest(self, ctx):
+        """Command for users to input their car information"""
+        await ctx.send("Please select your car model:", view=ModelButtons())
 
 class CarAttributes():
     """Class for storing car attributes, will be used for carinfo."""
