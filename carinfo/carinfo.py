@@ -18,35 +18,35 @@ class ModelButtons(discord.ui.View): #Class for storing model buttons, will be u
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
         button.disabled=True
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda 3", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        button.disabled=True
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda 5", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):   
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda 6", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda CX-3", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda CX-5", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda CX-9", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda CX-30", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda CX-50", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=self)
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
     @discord.ui.button(label="Mazda CX-90", style=discord.ButtonStyle.primary)
     async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.edit_message(view=self)
+        button.disabled=True
+        await interaction.response.edit_message(content=f"You selected {button.label}", view=self)
 
 
 class CarAttributes():
