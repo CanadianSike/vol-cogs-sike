@@ -1,7 +1,14 @@
 import discord
 
 
-class ModelButtons(discord.ui.Button): #Class for storing model buttons, will be used for car_attributes.
+
+# View Class
+class ButtonView(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=180)  # Set timeout for the view
+
+# Button Class
+class ModelButtons():
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
-    async def button_callback(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def button_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(f"You selected {button.label}!", ephemeral=True)
