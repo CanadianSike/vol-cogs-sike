@@ -12,8 +12,7 @@ class CarInfo(commands.Cog):
     async def carinfo(self, ctx):
         """Command for users to input their car information"""
         await ctx.send("Please select your car model:")
-        view=ModelButtons()
-        await ctx.send(view=view)
+        await ctx.send(view=ModelButtons())
 
 class ModelButtons(discord.ui.View): #Class for storing model buttons, will be used for car_attributes.
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
