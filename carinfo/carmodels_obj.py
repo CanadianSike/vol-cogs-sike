@@ -7,11 +7,11 @@ class ModelButtons(discord.ui.View):
     # This class will create buttons for car model selection
 
     # Mazda 2 Button
-    @discord.ui.button(label="Mazda 2", row=0, style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Mazda 2", row=0, slot=0, style=discord.ButtonStyle.primary)
     async def mazda2_callback(self, button, interaction: discord.Interaction):
         await interaction.response.send_message(f"You selected {button.label}!", ephemeral=True)
     # Mazda 3 Button
-    @discord.ui.button(label="Mazda 3", row=1, style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Mazda 3", slot=1, style=discord.ButtonStyle.primary)
     async def mazda3_callback(self, button, interaction: discord.Interaction):
         await interaction.response.send_message(f"You selected {button.label}!", ephemeral=True)
     # Mazda 6 Button
