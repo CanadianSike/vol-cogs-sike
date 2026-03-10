@@ -11,7 +11,6 @@ class CarInfo(commands.Cog):
     @commands.command()
     async def carinfo(self, ctx):
         """Command for users to input their car information"""
-        await ctx.response.send_message("Please enter your car information via the buttons.", ephemeral=True)
         await ctx.send("Please select your car model:", view=ModelButton(view=view))
         view=ModelButton()
 
