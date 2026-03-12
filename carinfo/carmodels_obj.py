@@ -3,8 +3,11 @@ import discord
 
 
 # View Class
-class ModelButtons(discord.ui.View):
-    # This class will create buttons for car model selection
+class MazdaModelButtons(discord.ui.View):
+#*************************************************************************************************
+# This class will create buttons for Mazda model selection(s).
+#*************************************************************************************************
+##### Sedan/Hatchback/Miata Models #####
 
     # Mazda 2 Button
     @discord.ui.button(label="Mazda 2", style=discord.ButtonStyle.primary)
@@ -18,6 +21,13 @@ class ModelButtons(discord.ui.View):
     @discord.ui.button(label="Mazda 6", style=discord.ButtonStyle.primary)
     async def mazda6_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("You selected Mazda 6!", ephemeral=True)
+    # Mazda MX-5 Button
+    @discord.ui.button(label="Mazda MX-5", style=discord.ButtonStyle.primary)
+    async def mazda_mx5_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("You selected Mazda MX-5!", ephemeral=True)
+
+##### SUV Models #####  
+    
     # Mazda CX-5 Button
     @discord.ui.button(label="Mazda CX-5", style=discord.ButtonStyle.primary)
     async def mazda_cx5_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -26,4 +36,31 @@ class ModelButtons(discord.ui.View):
     @discord.ui.button(label="Mazda CX-9", style=discord.ButtonStyle.primary)
     async def mazda_cx9_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("You selected Mazda CX-9!", ephemeral=True)
- 
+    # Mazda CX-30 Button
+    @discord.ui.button(label="Mazda CX-30", style=discord.ButtonStyle.primary)
+    async def mazda_cx30_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("You selected Mazda CX-30!", ephemeral=True)
+    # Mazda CX-50 Button
+    @discord.ui.button(label="Mazda CX-50", style=discord.ButtonStyle.primary)
+    async def mazda_cx50_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("You selected Mazda CX-50!", ephemeral=True)
+    # Mazda CX-90 Button
+    @discord.ui.button(label="Mazda CX-90", style=discord.ButtonStyle.primary)
+    async def mazda_cx90_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("You selected Mazda CX-90!", ephemeral=True)
+
+
+
+
+
+
+
+class MazdaModelList(discord.ui.View):
+#*************************************************************************************************
+# This class will create a list of available Mazda models.
+#*************************************************************************************************
+    @discord.ui.Select(placeholder="Select a Mazda model", options=[
+        discord.SelectOption(label="Mazda 2", description="Subcompact sedan/hatchback"),
+        discord.SelectOption(label="Mazda 3", description="Compact sedan/hatchback"),])
+    async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
+        await interaction.response.send_message(f"You selected {select.values[0]}!", ephemeral=True)
