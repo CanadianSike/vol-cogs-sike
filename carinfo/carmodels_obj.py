@@ -61,6 +61,11 @@ class MazdaModelList(discord.ui.View):
 #*************************************************************************************************
     @discord.ui.select(placeholder="Select a Mazda model", options=[
         discord.SelectOption(label="Mazda 2", description="Subcompact sedan/hatchback"),
-        discord.SelectOption(label="Mazda 3", description="Compact sedan/hatchback"),])
+        discord.SelectOption(label="Mazda 3", description="Compact sedan/hatchback")])
     async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         await interaction.response.send_message(f"You selected {select.values[0]}!", ephemeral=True)
+    @discord.ui.select(placeholder="Select engine size", options=[
+        discord.SelectOption(label="2.0L", description="2.0L engine option"),
+        discord.SelectOption(label="2.5L", description="2.5L engine option")])
+    async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
+        await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
