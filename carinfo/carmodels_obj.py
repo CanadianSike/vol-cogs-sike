@@ -59,7 +59,7 @@ class MazdaModelList(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available Mazda models.
 #*************************************************************************************************
-    @discord.ui.Select(placeholder="Select a Mazda model", options=[
+    @discord.ui.select(placeholder="Select a Mazda model", options=[
         discord.SelectOption(label="Mazda 2", description="Subcompact sedan/hatchback"),
         discord.SelectOption(label="Mazda 3", description="Compact sedan/hatchback"),])
     async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
