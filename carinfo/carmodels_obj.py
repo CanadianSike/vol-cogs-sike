@@ -11,7 +11,7 @@ class MazdaModelButtons(discord.ui.View):
     # Mazda SUV Button
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def mazda2_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("You selected SUV!", ephemeral=True, view=MazdaSuvClass())
+        await interaction.response.send_message("You selected SUV!", ephemeral=True, view=MazdaSuvList())
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
@@ -45,7 +45,7 @@ class MazdaCarList(discord.ui.View):
     async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
 
-class MazdaSuvClass(discord.ui.View):
+class MazdaSuvList(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available Mazda SUV models.
 #*************************************************************************************************

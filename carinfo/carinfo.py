@@ -1,7 +1,7 @@
 from redbot.core import commands, app_commands 
 import discord
 from .carmodels_obj import MazdaCarList, MazdaModelButtons
-from .carmodels_obj import MazdaModelList
+from .carmodels_obj import MazdaSuvList, MazdaModelButtons
 
 
 # Classname should be CamelCase and the same spelling as the folder
