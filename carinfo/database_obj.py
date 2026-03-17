@@ -1,7 +1,7 @@
-import psycopg2
-from psycopg2 import pool
 import discord
 from discord import ui
+import psycopg2
+from psycopg2 import pool
 import redbot.core
 
 
@@ -14,8 +14,4 @@ class DatabaseSetup(ui.Modal, title="Database Setup"):
     db_host = ui.TextInput(label="Database Host", placeholder="Database host (e.g., localhost/IP address)", required=True)
     db_port = ui.TextInput(label="Database Port", placeholder="Database port (e.g., 5432/8086)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
-        print(f"Database Name: {self.db_name.value}")
-        print(f"Database User: {self.db_user.value}")
-        print(f"Database Password: {self.db_password.value}")
-        print(f"Database Host: {self.db_host.value}")
-        print(f"Database Port: {self.db_port.value}")
+        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}, Database Host: {self.db_host.value}, Database Port: {self.db_port.value}", ephemeral=True)
