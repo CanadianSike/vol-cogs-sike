@@ -9,5 +9,5 @@ import redbot.core
 class DatabaseSetup(ui.Modal, title="Database Setup"):
     """Modal for setting up the database connection."""
     db_name = ui.Label(text="Database Name", component=ui.TextInput())
-    async def on_submit(self, interaction: discord.Interaction):
+    async def on_submit(ctx, self, interaction: discord.Interaction):
         await interaction.response.send_message(f"Database Name: {self.db_name.value}", ephemeral=True)
