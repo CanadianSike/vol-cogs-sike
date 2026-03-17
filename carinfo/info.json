@@ -17,6 +17,7 @@
     ],
     "required_cogs": {},
     "requirements": [
+        "psycopg2-binary",
         "psycopg2"
     ],
     "short": "TBD",
