@@ -1,7 +1,7 @@
 from redbot.core import commands, app_commands 
 import discord
-from .carmodels_obj import MazdaCarList, MazdaModelButtons
-from .carmodels_obj import MazdaSuvList, MazdaModelButtons
+from .carmodels_obj import MazdaCarList, ModelButtons
+from .carmodels_obj import MazdaSuvList, ModelButtons
 
 
 # Classname should be CamelCase and the same spelling as the folder
@@ -11,14 +11,18 @@ class CarInfo(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def car(self, ctx):
+    async def carinfo(self, ctx):
         """Command for users to input their car information"""
-        await ctx.send("Please select your car model:", view=MazdaModelButtons())
+        await ctx.send("Please select your car model:", view=ModelButtons())
 
     @commands.command()
-    async def mazdalist(self, ctx):
-        """Command for users to view the list of available Mazda models"""
-        await ctx.send("Here are the available Mazda models:", view=MazdaCarList())
+    async def mycar(self, ctx):
+        """Command for users to display their car information"""
+        # Pull car data from database and use embed for display.
+        await ctx.send("NOT IMPLEMENTED YET")
+        
+    @commands.command()
+    async def database(self, ctx):
+        await ctx.send("lets get started.")
+        commands.des
 
-class CarAttributes():
-    """Class for storing car attributes, will be used for carinfo."""
