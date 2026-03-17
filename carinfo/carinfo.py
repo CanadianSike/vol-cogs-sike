@@ -1,5 +1,7 @@
 from redbot.core import commands, app_commands 
 import discord
+
+from .database_obj import DatabaseSetup
 from .carmodels_obj import MazdaCarList, ModelButtons
 from .carmodels_obj import MazdaSuvList, ModelButtons
 
@@ -23,6 +25,6 @@ class CarInfo(commands.Cog):
         
     @commands.command()
     async def database(self, ctx):
-        await ctx.send("lets get started.")
-        commands.des
+        await ctx.send("lets get started.", view=DatabaseSetup())
+
 
