@@ -1,0 +1,27 @@
+{
+    "author": [
+        "Modifier: CanadianSike"
+    ],
+    "description": "Allow users to store their car mods and information",
+    "disabled": false,
+    "end_user_data_statement": "This cog stores User ID's for the purposes of storing user(s) car information2.",
+    "hidden": false,
+    "min_python_version": [
+        3,
+        7,
+        2
+    ],
+    "name": "Carinfo",
+    "permissions": [
+        "TBD"
+    ],
+    "required_cogs": {},
+    "requirements": [
+        "psycopg2"
+    ],
+    "short": "TBD",
+    "tags": [
+        "TBD"
+    ],
+    "type": "COG"
+}
