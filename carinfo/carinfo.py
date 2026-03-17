@@ -1,5 +1,6 @@
 from redbot.core import commands, app_commands 
 import discord
+import psycopg2
 
 from .database_obj import DatabaseSetup
 from .carmodels_obj import MazdaCarList, ModelButtons
