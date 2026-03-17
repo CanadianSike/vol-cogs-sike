@@ -10,4 +10,4 @@ class DatabaseSetup(ui.Modal, title="Database Setup"):
     """Modal for setting up the database connection."""
     db_name = ui.Label(text="Database Name", component=ui.TextInput())
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}, Database Host: {self.db_host.value}, Database Port: {self.db_port.value}", ephemeral=True)
+        await interaction.response.send_message(f"Database Name: {self.db_name.value}", ephemeral=True)
