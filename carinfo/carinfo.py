@@ -28,7 +28,7 @@ class CarInfo(commands.Cog):
         
     @commands.command()
     async def database(self, interaction: discord.Interaction):
-        await interaction.response.send_modal(DatabaseSetup())
+        await interaction.response.send_message(embed=DatabaseSetup())
 
 
 
