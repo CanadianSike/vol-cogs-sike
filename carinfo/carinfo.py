@@ -27,8 +27,8 @@ class CarInfo(commands.Cog):
         await ctx.send("NOT IMPLEMENTED YET")
         
     @commands.command()
-    async def database(self, ctx):
-        await ctx.send_modal(DatabaseSetup())
+    async def database(self, interaction: discord.Interaction):
+        await interaction.response.send_modal(DatabaseSetup())
 
 
 
