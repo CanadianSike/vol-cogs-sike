@@ -1,10 +1,12 @@
-from redbot.core import commands, app_commands 
+from redbot.core import commands
 import discord
+from discord import ui
 import psycopg2
 
 from .database_obj import DatabaseSetup
 from .carmodels_obj import MazdaCarList, ModelButtons
 from .carmodels_obj import MazdaSuvList, ModelButtons
+from .database_obj import DatabaseSetup
 
 
 # Classname should be CamelCase and the same spelling as the folder
@@ -27,5 +29,6 @@ class CarInfo(commands.Cog):
     @commands.command()
     async def database(self, ctx):
         await ctx.send_modal(DatabaseSetup())
+
 
 
