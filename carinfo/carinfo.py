@@ -26,6 +26,6 @@ class CarInfo(commands.Cog):
         
     @commands.command()
     async def database(self, ctx):
-        await ctx.send(DatabaseSetup())
+        await ctx.send_modal(DatabaseSetup())
 
 
