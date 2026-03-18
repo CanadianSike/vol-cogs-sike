@@ -6,7 +6,7 @@ import redbot.core
 
 
 # Class for database credentials and connection pool info. 
-class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
+class DatabaseSetup(discord.ui.View, title="Database Setup"):
     """Modal for setting up the database connection."""
     db_name = discord.ui.Label(text="Database Name", component=discord.ui.TextInput())
     async def on_submit(self, interaction: discord.Interaction):

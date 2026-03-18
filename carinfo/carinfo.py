@@ -1,4 +1,5 @@
 from redbot.core import commands
+from redbot.core.utils.views import SetApiModal
 import discord
 from discord import ui
 import psycopg2
@@ -27,8 +28,5 @@ class CarInfo(commands.Cog):
         await ctx.send("NOT IMPLEMENTED YET")
         
     @commands.command()
-    async def database(self, interaction: discord.Interaction):
-        await interaction.response.send_message(embed=DatabaseSetup())
-
-
-
+    async def database(self, ctx):
+        await ctx.send(view=DatabaseSetup())
