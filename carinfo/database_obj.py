@@ -14,11 +14,11 @@ class dbbuttons(discord.ui.View):
         try:
             # Attempt to connect to the database using the provided credentials
             connection = asyncpg.connect(
-                dbname=DatabaseSetup.db_name.value, # Database name from Modal input
+                database=DatabaseSetup.db_name.value, # Database name from Modal input
                 user=DatabaseSetup.db_user.value, # Database username from Modal input
                 password=DatabaseSetup.db_password.value, # Database password from Modal input
                 host=DatabaseSetup.db_host.value, # Database host from Modal input
-                port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
+                # port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
             )
             cur = connection.cursor()
             cur.execute("SELECT version();")
