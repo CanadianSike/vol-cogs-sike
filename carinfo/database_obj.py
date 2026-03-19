@@ -12,6 +12,7 @@ class dbbuttons(discord.ui.View):
     @discord.ui.button(label='Test Connection', style=discord.ButtonStyle.secondary)# Button to test database connection using provided credentials
     async def testdb(self, interaction: discord.Interaction, button: discord.ui.Button): # Test Database button callback
         await interaction.response.send_message("Testing database connection...", ephemeral=True)
+    async def test(user, password, database, host, port):
         connection = None
         try:
             # Attempt to connect to the database using the provided credentials
