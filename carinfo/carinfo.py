@@ -32,4 +32,3 @@ class CarInfo(commands.Cog):
     async def setupdb(self, ctx, interaction: discord.Interaction):
         """Command for setting up the database connection"""
         await ctx.send(view=dbbuttons())
-        await interaction.response.send_modal(modal=DatabaseSetup())
