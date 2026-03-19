@@ -2,20 +2,26 @@ import discord
 
 
 
-# View Class
+class CarBrands(discord.ui.View):
+    @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
+    async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=ModelButtons())
+
+
+
 class ModelButtons(discord.ui.View):
 #*************************************************************************************************
-# This class will create buttons for Mazda model selection(s).
+# Buttons will be called to select car catagory. SUV/CAR/ETC
 #*************************************************************************************************
 # 
     # Mazda SUV Button
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
-    async def mazda2_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("You selected SUV!", ephemeral=True, view=MazdaSuvList())
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
-    async def mazda3_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("You selected Sedan/Hatchback/Coupe!", ephemeral=True, view=MazdaCarList())
 
 
