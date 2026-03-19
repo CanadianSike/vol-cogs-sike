@@ -32,4 +32,4 @@ class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
     db_password = ui.TextInput(label="Database Password", placeholder="Enter your database password", required=True, style=discord.TextStyle.short) # DB password
     db_host = ui.TextInput(label="Database Host", placeholder="Enter your database host", required=True) # DB host IP/URL
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}, Database Host: {self.db_host.value}, Database Port: {self.db_port.value}", ephemeral=True)
+        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}, Database Host: {self.db_host.value}", ephemeral=True)
