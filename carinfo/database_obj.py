@@ -8,7 +8,7 @@ import redbot.core
 class dbbuttons(discord.ui.View):
     @discord.ui.button(label="Setup Database Connection", style=discord.ButtonStyle.primary)
     async def setupdb(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(modal=DatabaseSetup())
+        await interaction.response.send_modal(DatabaseSetup())
 
 # Class for database credentials and connection pool info. 
 class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
