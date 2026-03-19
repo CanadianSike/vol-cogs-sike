@@ -5,6 +5,7 @@ from discord import ui
 import psycopg2
 
 from .database_obj import DatabaseSetup
+from .database_obj import dbbuttons
 from .carmodels_obj import MazdaCarList, ModelButtons
 from .carmodels_obj import MazdaSuvList, ModelButtons
 from .database_obj import DatabaseSetup
@@ -28,6 +29,6 @@ class CarInfo(commands.Cog):
         await ctx.send("NOT IMPLEMENTED YET")
         
     @commands.command()
-    async def setupdb(self, interaction: discord.Interaction):
+    async def setupdb(self, ctx):
         """Command for setting up the database connection"""
-        await interaction.response.send_modal(modal=DatabaseSetup())
+        await ctx.send(view=dbbuttons())
