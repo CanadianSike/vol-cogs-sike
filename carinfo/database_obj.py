@@ -21,6 +21,13 @@ class dbbuttons(discord.ui.View):
                 host=self.db_host.value,
                 port=self.db_port.value
             )
+            cur = connection.cursor()
+                # Execute a sample query
+            cur.execute("SELECT version();")
+
+                # Fetch the result and print
+            db_version = cur.fetchone()
+            await interaction.followup.send(f"Connected to PostgreSQL database version: {db_version}", ephemeral=True)
             connection.close()
             await interaction.followup.send("Database connection successful!", ephemeral=True)
         except Exception as e:
@@ -35,4 +42,4 @@ class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
     db_host = ui.TextInput(label="Database Host", placeholder="Enter your database host", required=True) # DB host IP/URL
     db_port = ui.TextInput(label="Database Port", placeholder="Enter your database port", required=True) # DB port, default is usually 5432 for PostgreSQL
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}",ephemeral=True)
+        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}, Database Password: {self.db_password.value}, Database Host: {self.db_host.value}, Database Port: {self.db_port.value}", ephemeral=True)
