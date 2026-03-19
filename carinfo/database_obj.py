@@ -6,17 +6,33 @@ import redbot.core
 
 # Class for calling button to summon Modal. Allows for database input.
 class dbbuttons(discord.ui.View):
-    @discord.ui.button(label="Setup Database Connection", style=discord.ButtonStyle.primary)
-    async def setupdb(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(DatabaseSetup())
+    @discord.ui.button(label="Setup Database Connection", style=discord.ButtonStyle.primary) # Button to summon DatabaseSetup Modal
+    async def setupdb(self, interaction: discord.Interaction, button: discord.ui.Button): # Setup Database button callback
+        await interaction.response.send_modal(DatabaseSetup()) # Call DatabaseSetup Modal when button is clicked
+    @discord.ui.button(label='Test Connection', style=discord.ButtonStyle.secondary)
+    async def testdb(self, interaction: discord.Interaction, button: discord.ui.Button): # Test Database button callback
+        await interaction.response.send_message("Testing database connection...", ephemeral=True)
+        try:
+            # Attempt to connect to the database using the provided credentials
+            connection = psycopg2.connect(
+                dbname=self.db_name.value,
+                user=self.db_user.value,
+                password=self.db_password.value,
+                host=self.db_host.value,
+                port=self.db_port.value
+            )
+            connection.close()
+            await interaction.followup.send("Database connection successful!", ephemeral=True)
+        except Exception as e:
+            await interaction.followup.send(f"Error occurred while testing database connection: {e}", ephemeral=True)
 
 # Class for database credentials and connection pool info. 
 class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
     """Modal for setting up the database connection."""
-    db_name = ui.TextInput(label="Database Name", placeholder="Enter your database name", required=True)
-    db_user = ui.TextInput(label="Database User", placeholder="Enter your database user", required=True)
-    db_password = ui.TextInput(label="Database Password", placeholder="Enter your database password", required=True, style=discord.TextStyle.short)
-    db_host = ui.TextInput(label="Database Host", placeholder="Enter your database host", required=True)
-    db_port = ui.TextInput(label="Database Port", placeholder="Enter your database port", required=True)
+    db_name = ui.TextInput(label="Database Name", placeholder="Enter your database name", required=True) # DB name
+    db_user = ui.TextInput(label="Database User", placeholder="Enter your database user", required=True) # DB user
+    db_password = ui.TextInput(label="Database Password", placeholder="Enter your database password", required=True, style=discord.TextStyle.short) # DB password
+    db_host = ui.TextInput(label="Database Host", placeholder="Enter your database host", required=True) # DB host IP/URL
+    db_port = ui.TextInput(label="Database Port", placeholder="Enter your database port", required=True) # DB port, default is usually 5432 for PostgreSQL
     async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}", ephemeral=True)
+        await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}",ephemeral=True)
