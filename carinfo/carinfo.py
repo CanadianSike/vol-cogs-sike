@@ -2,7 +2,6 @@ from redbot.core import commands
 from redbot.core.utils.views import SetApiModal
 import discord
 from discord import ui
-import psycopg2
 
 from .database_obj import DatabaseSetup
 from .database_obj import dbbuttons

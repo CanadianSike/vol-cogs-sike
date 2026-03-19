@@ -1,7 +1,6 @@
 import discord
 from discord import ui
-import psycopg2
-from psycopg2 import pool
+import asyncpg
 import redbot.core
 
 # Class for calling button to summon Modal. Allows for database input and connection testing.
@@ -14,7 +13,7 @@ class dbbuttons(discord.ui.View):
         await interaction.response.send_message("Testing database connection...", ephemeral=True)
         try:
             # Attempt to connect to the database using the provided credentials
-            connection = psycopg2.connect(
+            connection = asyncpg.connect(
                 dbname=DatabaseSetup.db_name.value, # Database name from Modal input
                 user=DatabaseSetup.db_user.value, # Database username from Modal input
                 password=DatabaseSetup.db_password.value, # Database password from Modal input
