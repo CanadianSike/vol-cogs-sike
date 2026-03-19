@@ -29,6 +29,6 @@ class CarInfo(commands.Cog):
         await ctx.send("NOT IMPLEMENTED YET")
         
     @commands.command()
-    async def setupdb(self, ctx, interaction: discord.Interaction):
+    async def setupdb(self, ctx):
         """Command for setting up the database connection"""
         await ctx.send(view=dbbuttons())
