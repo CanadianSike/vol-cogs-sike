@@ -15,11 +15,11 @@ class dbbuttons(discord.ui.View):
         try:
             # Attempt to connect to the database using the provided credentials
             connection = psycopg2.connect(
-                dbname=self.db_name.value,
-                user=self.db_user.value,
-                password=self.db_password.value,
-                host=self.db_host.value,
-                port=self.db_port.value
+                dbname=DatabaseSetup.db_name.value,
+                user=DatabaseSetup.db_user.value,
+                password=DatabaseSetup.db_password.value,
+                host=DatabaseSetup.db_host.value,
+                port=DatabaseSetup.db_port.value
             )
             cur = connection.cursor()
                 # Execute a sample query
