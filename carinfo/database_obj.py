@@ -13,7 +13,7 @@ class dbbuttons(discord.ui.View):
         await interaction.response.send_message("Testing database connection...", ephemeral=True)
         try:
             # Attempt to connect to the database using the provided credentials
-            connection = asyncpg.connect(
+            connection = await asyncpg.connect(
                 database=DatabaseSetup.db_name.value, # Database name from Modal input
                 user=DatabaseSetup.db_user.value, # Database username from Modal input
                 password=DatabaseSetup.db_password.value, # Database password from Modal input
