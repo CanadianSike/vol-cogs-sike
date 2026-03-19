@@ -20,15 +20,11 @@ class dbbuttons(discord.ui.View):
                 host=DatabaseSetup.db_host.value, # Database host from Modal input
                 # port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
             )
-            cur = connection.cursor()
-            cur.execute("SELECT version();")
-            db_version = cur.fetchone()
-            await interaction.followup.send(f"Connected to PostgreSQL database version: {db_version}", ephemeral=True)
+            await connection.test('SELECT 1')
+            await interaction.followup.send("Database connection successful!", ephemeral=True)
             connection.close()
-            await interaction.followup.send("Database connection successful!", ephemeral=True)# If connection is successful, send success message
         except Exception as e:
-            await interaction.followup.send(f"Error occurred while testing database connection: {e}", ephemeral=True)# If connection fails, send error message with error log
-
+            await interaction.followup.send(f"Database connection failed: {e}", ephemeral=True)
 # Class for database credentials and connection pool info. 
 class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
     """Modal for setting up the database connection."""
