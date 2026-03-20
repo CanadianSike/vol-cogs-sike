@@ -42,7 +42,7 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="Mazda 3", description="Compact sedan/hatchback"),
         discord.SelectOption(label="Mazda 6", description="Midsize sedan"),
         discord.SelectOption(label="Miata", description="Sports car")])
-    async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
+    async def model_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_model = select.values[0] # Store selected model for later use
         await interaction.response.defer()
     # Engine Size Selection.
@@ -58,6 +58,7 @@ class MazdaCarList(discord.ui.View):
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons())
+
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
@@ -84,17 +85,20 @@ class MazdaSuvList(discord.ui.View):
     async def suv_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_model = select.values[0] # Store selected model for later use
         await interaction.response.defer()
+
     # Engine Size Selection.
     @discord.ui.select(placeholder="Select engine size", options=[
         discord.SelectOption(label="2.0L", description="2.0L engine option"),
         discord.SelectOption(label="2.5L", description="2.5L engine option"),
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def suv_engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        self.selected_model = select.values[0] # Store selected model for later use
+        self.selected_engine = select.values[0] # Store selected engine for later use
         await interaction.response.defer()
+
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons())
+
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
