@@ -44,7 +44,7 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="Miata", description="Sports car")])
     async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_model = select.values[0] # Store selected model for later use
-        await self.check_all_buttons(interaction)
+        await self.confirm_callback(interaction)
 
     # Engine Size Selection.
     @discord.ui.select(placeholder="Select engine size", options=[
@@ -54,7 +54,7 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_engine = select.values[0] # Store selected engine for later use
-        await self.check_all_buttons(interaction)
+        await self.confirm_callback(interaction)
 
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
