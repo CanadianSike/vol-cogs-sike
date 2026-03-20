@@ -82,24 +82,25 @@ class MazdaSuvList(discord.ui.View):
         discord.SelectOption(label="CX-9", description="Full-size SUV"),
         discord.SelectOption(label="CX-90", description="Full-size SUV")])
     async def suv_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        await self.check_all_used(interaction)
-
+        self.selected_model = select.values[0] # Store selected model for later use
+        await interaction.response.defer()
     # Engine Size Selection.
     @discord.ui.select(placeholder="Select engine size", options=[
         discord.SelectOption(label="2.0L", description="2.0L engine option"),
         discord.SelectOption(label="2.5L", description="2.5L engine option"),
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def suv_engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        await interaction.response.send_message(f"You selected {select.values[0]} engine for your SUV!", ephemeral=True)
-
+        self.selected_model = select.values[0] # Store selected model for later use
+        await interaction.response.defer()
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons())
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("Your SUV selection has been confirmed!", ephemeral=True)
-
-
+        if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
+            await interaction.response.send_message(f"Car selection confirmed: {self.selected_model} with {self.selected_engine} engine.", ephemeral=True)
+        else:
+            await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
 class ToyotaCarList(discord.ui.View):
 #*************************************************************************************************
