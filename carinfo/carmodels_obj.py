@@ -43,7 +43,8 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="Mazda 6", description="Midsize sedan"),
         discord.SelectOption(label="Miata", description="Sports car")])
     async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        await interaction.response.send_message(f"You selected {select.values[0]}!", ephemeral=True)
+        self.selected_model = select.values[0] # Store selected model for later use
+        await self.check_all_buttons(interaction)
 
     # Engine Size Selection.
     @discord.ui.select(placeholder="Select engine size", options=[
@@ -52,15 +53,18 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="2.5L", description="2.5L engine option"),
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
+        self.selected_engine = select.values[0] # Store selected engine for later use
+        await self.check_all_buttons(interaction)
 
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons())
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("Car selection has been confirmed!", ephemeral=True)
-
+        if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
+            await interaction.response.send_message("Car selection has been confirmed!", ephemeral=True)
+        else:
+            await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
 
 
