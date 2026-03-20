@@ -75,10 +75,7 @@ class MazdaSuvList(discord.ui.View):
         discord.SelectOption(label="CX-50", description="Midsize SUV"),
         discord.SelectOption(label="CX-9", description="Full-size SUV"),
         discord.SelectOption(label="CX-90", description="Full-size SUV")])
-    async def suv_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        await interaction.response.send_message(f"You selected {select.values[0]} SUV model!", ephemeral=True)
-
-    # Engine Size Selection.
+    
     @discord.ui.select(placeholder="Select engine size", options=[
         discord.SelectOption(label="2.0L", description="2.0L engine option"),
         discord.SelectOption(label="2.5L", description="2.5L engine option"),
