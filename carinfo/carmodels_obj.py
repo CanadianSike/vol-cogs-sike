@@ -17,12 +17,13 @@ class ModelButtons(discord.ui.View):
     # Mazda SUV Button
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("You selected SUV!", ephemeral=True, view=MazdaSuvList())
+        await interaction.response.send_message(ephemeral=True, view=MazdaSuvList())
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
     async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("You selected Sedan/Hatchback/Coupe!", ephemeral=True, view=MazdaCarList())
+        await interaction.response.send_message(ephemeral=True, view=MazdaCarList())
+
 
 
 
@@ -53,6 +54,9 @@ class MazdaCarList(discord.ui.View):
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons())
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
+    async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("Car selection has been confirmed!", ephemeral=True)
 
 
 
@@ -82,6 +86,12 @@ class MazdaSuvList(discord.ui.View):
     async def suv_engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         await interaction.response.send_message(f"You selected {select.values[0]} engine for your SUV!", ephemeral=True)
 
+    @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
+    async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=ModelButtons())
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
+    async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("Your SUV selection has been confirmed!", ephemeral=True)
 
 
 
