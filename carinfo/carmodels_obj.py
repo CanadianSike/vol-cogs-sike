@@ -6,6 +6,9 @@ class CarBrands(discord.ui.View):
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons())
+    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
+    async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=ModelButtons())
 
 
 
@@ -14,15 +17,15 @@ class ModelButtons(discord.ui.View):
 # Buttons will be called to select car catagory. SUV/CAR/ETC
 #*************************************************************************************************
 # 
-    # Mazda SUV Button
+
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(ephemeral=True, view=MazdaSuvList())
+        await interaction.response.send_message(view=MazdaSuvList())
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
     async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(ephemeral=True, view=MazdaCarList())
+        await interaction.response.send_message(view=MazdaCarList())
 
 
 
