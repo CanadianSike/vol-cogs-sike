@@ -22,12 +22,41 @@ class dbbuttons(discord.ui.View):
             )
             cur = connection.cursor()
             cur.execute("SELECT version();")
+            cur.execute()
             db_version = cur.fetchone()
             await interaction.followup.send(f"Connected to PostgreSQL database version: {db_version}", ephemeral=True)
+            await interaction.followup.send(f"", ephemeral=True)
             connection.close()
             await interaction.followup.send("Database connection successful!", ephemeral=True)# If connection is successful, send success message
         except Exception as e:
             await interaction.followup.send(f"Error occurred while testing database connection: {e}", ephemeral=True)# If connection fails, send error message with error log
+    @discord.ui.button(label="query tables", style=discord.ButtonStyle.secondary) # Button to query database tables and display results
+    async def querydb(self, interaction: discord.Interaction, button: discord.ui.Button): # Query Database button callback
+        await interaction.response.send_message("Querying database tables...", ephemeral=True)
+        try:
+            # Attempt to connect to the database using the provided credentials
+            connection = psycopg2.connect(
+                dbname=DatabaseSetup.db_name.value, # Database name from Modal input
+                user=DatabaseSetup.db_user.value, # Database username from Modal input
+                password=DatabaseSetup.db_password.value, # Database password from Modal input
+                host=DatabaseSetup.db_host.value, # Database host from Modal input
+                port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
+            )
+            cur = connection.cursor()
+            cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';") # Query to get list of tables in the public schema
+            tables = cur.fetchall()
+            if tables:
+                table_list = "\n".join([table[0] for table in tables]) # Format table names into a string for display
+                await interaction.followup.send(f"Tables in the database:\n{table_list}", ephemeral=True) # Send list of tables as a message
+            else:
+                await interaction.followup.send("No tables found in the database.", ephemeral=True) # If no tables are found, send message indicating that
+            connection.close()
+        except Exception as e:
+            await interaction.followup.send(f"Error occurred while querying database: {e}", ephemeral=True) # If query fails, send error message with error log
+
+
+
+
 
 # Class for database credentials and connection pool info. 
 class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
