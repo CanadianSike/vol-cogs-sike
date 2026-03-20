@@ -50,6 +50,14 @@ class MazdaCarList(discord.ui.View):
     async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
 
+    @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
+    async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=ModelButtons())
+
+
+
+
+
 class MazdaSuvList(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available Mazda SUV models.

@@ -30,7 +30,7 @@ class dbbuttons(discord.ui.View):
             await interaction.followup.send("Database connection successful!", ephemeral=True)# If connection is successful, send success message
         except Exception as e:
             await interaction.followup.send(f"Error occurred while testing database connection: {e}", ephemeral=True)# If connection fails, send error message with error log
-    @discord.ui.button(label="query tables", style=discord.ButtonStyle.secondary) # Button to query database tables and display results
+    @discord.ui.button(label="Query tables", style=discord.ButtonStyle.secondary) # Button to query database tables and display results
     async def querydb(self, interaction: discord.Interaction, button: discord.ui.Button): # Query Database button callback
         await interaction.response.send_message("Querying database tables...", ephemeral=True)
         try:
@@ -43,13 +43,13 @@ class dbbuttons(discord.ui.View):
                 port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
             )
             cur = connection.cursor()
-            cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';") # Query to get list of tables in the public schema
+            cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';") # Query to get list of tables in the .public schema
             tables = cur.fetchall()
             if tables:
                 table_list = "\n".join([table[0] for table in tables]) # Format table names into a string for display
                 await interaction.followup.send(f"Tables in the database:\n{table_list}", ephemeral=True) # Send list of tables as a message
             else:
-                await interaction.followup.send("No tables found in the database.", ephemeral=True) # If no tables are found, send message indicating that
+                await interaction.followup.send("No tables found in the database.", ephemeral=True) # If no tables are found, send message
             connection.close()
         except Exception as e:
             await interaction.followup.send(f"Error occurred while querying database: {e}", ephemeral=True) # If query fails, send error message with error log
