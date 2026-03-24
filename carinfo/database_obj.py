@@ -2,8 +2,6 @@ import discord
 from discord import ui
 import psycopg2
 import redbot.core
-import carmodels_obj
-from .carmodels_obj import UserCarInfo
 # Class for calling button to summon Modal. Allows for database input and connection testing.
 class dbbuttons(discord.ui.View):
     @discord.ui.button(label="Setup Database Connection", style=discord.ButtonStyle.primary) # Button to summon DatabaseSetup Modal
