@@ -1,7 +1,7 @@
 import discord
 from discord import ui
 import asyncio
-from database_obj import DatabaseSetup
+from . import database_obj
 
 
 
