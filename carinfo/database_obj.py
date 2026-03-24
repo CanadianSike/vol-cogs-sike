@@ -2,11 +2,6 @@ import discord
 from discord import ui
 import psycopg2
 import redbot.core
-
-
-
-
-
 # Class for calling button to summon Modal. Allows for database input and connection testing.
 class dbbuttons(discord.ui.View):
     @discord.ui.button(label="Setup Database Connection", style=discord.ButtonStyle.primary) # Button to summon DatabaseSetup Modal
@@ -25,7 +20,6 @@ class dbbuttons(discord.ui.View):
                 port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
             )
             cur = connection.cursor()
-            cur.execute("SELECT version();")
             cur.execute()
             db_version = cur.fetchone()
             await interaction.followup.send(f"Connected to PostgreSQL database version: {db_version}", ephemeral=True)
@@ -34,6 +28,7 @@ class dbbuttons(discord.ui.View):
             await interaction.followup.send("Database connection successful!", ephemeral=True)# If connection is successful, send success message
         except Exception as e:
             await interaction.followup.send(f"Error occurred while testing database connection: {e}", ephemeral=True)# If connection fails, send error message with error log
+            
     @discord.ui.button(label="Query tables", style=discord.ButtonStyle.secondary) # Button to query database tables and display results
     async def querydb(self, interaction: discord.Interaction, button: discord.ui.Button): # Query Database button callback
         await interaction.response.send_message("Querying database tables...", ephemeral=True)
