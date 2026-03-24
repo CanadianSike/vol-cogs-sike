@@ -22,9 +22,9 @@ class dbbuttons(discord.ui.View):
             cur = connection.cursor()
             cur.execute("SELECT version();")
             db_version = cur.fetchone()
+            connection.close()
             await interaction.followup.send(f"Connected to PostgreSQL database version: {db_version}", ephemeral=True)
             await interaction.followup.send(f"", ephemeral=True)
-            connection.close()
             await interaction.followup.send("Database connection successful!", ephemeral=True)# If connection is successful, send success message
         except Exception as e:
             await interaction.followup.send(f"Error occurred while testing database connection: {e}", ephemeral=True)# If connection fails, send error message with error log
