@@ -1,16 +1,23 @@
 import discord
 from discord import ui
 import asyncio
+import database_obj
 
 
+
+#*************************************************************************************************
+#IMPORTANT VARIABLES
+#*************************************************************************************************
+
+
+#*************************************************************************************************
 class CarBrands(discord.ui.View):
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons())
+        await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
     @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
     async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("Sorry, eh")
-
+        await interaction.response.send_message("Sorry, eh", ephemeral=True)
 
 
 class ModelButtons(discord.ui.View):
@@ -18,7 +25,6 @@ class ModelButtons(discord.ui.View):
 # Buttons will be called to select car catagory. SUV/CAR/ETC
 #*************************************************************************************************
 # 
-
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
@@ -26,7 +32,7 @@ class ModelButtons(discord.ui.View):
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
     async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaCarList())
+        await interaction.response.send_message(view=MazdaCarList(), ephemeral=True)
 
 class IsTunedButtons(discord.ui.View):
 #*************************************************************************************************
@@ -42,7 +48,6 @@ class IsTunedButtons(discord.ui.View):
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(ephemeral=True)
 
-
 class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     """Modal for inputting tune revision."""
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
@@ -50,18 +55,15 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
         await interaction.response.send_message("Your information has been saved!", ephemeral=True)
         await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
         user_id = interaction.user.id # Get user ID from interaction
-        await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True)
-
+        await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
+        await asyncio.sleep(1) # Sleep for a moment to ensure the previous message is sent before attempting to send the tune revision information to the database
+        await database_obj.UserInfoToDatabase(user_id, "Mazda", self.selected_model, self.selected_engine, self.tune_revision.value) # Call the function to send user info to database
 #*************************************************************************************************
 #
 # FROM HERE AND BELOW IS FOR CAR SELECTION CLASSES.
 #
 #*************************************************************************************************
-
-
-
-
-
+#
 
 class MazdaCarList(discord.ui.View):
 #*************************************************************************************************
