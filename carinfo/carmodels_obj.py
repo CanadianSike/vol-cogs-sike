@@ -1,6 +1,6 @@
 import discord
 from discord import ui
-
+import asyncio
 
 
 class CarBrands(discord.ui.View):
@@ -9,7 +9,7 @@ class CarBrands(discord.ui.View):
         await interaction.response.send_message(view=ModelButtons())
     @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
     async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons())
+        await interaction.response.send_message("Sorry, eh")
 
 
 
@@ -36,16 +36,21 @@ class IsTunedButtons(discord.ui.View):
     @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
     async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_modal(TuneRevisionInput())
+    
+
+    @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("sucker", ephemeral=True)
+        await interaction.response.send_message(ephemeral=True)
 
 
 class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     """Modal for inputting tune revision."""
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
-
-
-
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message("Your information has been saved!", ephemeral=True)
+        await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
+        user_id = interaction.user.id # Get user ID from interaction
+        await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True)
 
 #*************************************************************************************************
 #
