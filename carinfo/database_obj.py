@@ -20,7 +20,7 @@ class dbbuttons(discord.ui.View):
                 port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
             )
             cur = connection.cursor()
-            cur.execute()
+            cur.execute("SELECT version();")
             db_version = cur.fetchone()
             await interaction.followup.send(f"Connected to PostgreSQL database version: {db_version}", ephemeral=True)
             await interaction.followup.send(f"", ephemeral=True)
