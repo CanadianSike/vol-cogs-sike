@@ -35,7 +35,7 @@ class IsTunedButtons(discord.ui.View):
 # 
     @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
     async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(TuneRevisionInput(), ephemeral=True)
+        await interaction.response.send_modal(TuneRevisionInput())
 
     @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
