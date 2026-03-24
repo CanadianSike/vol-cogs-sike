@@ -16,21 +16,21 @@ class CarInfo(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Command for users to input their car information. WIP.
+    # Command for users to input their car information. SEE: carmodels_obj.py
     @commands.command()
     async def carinfo(self, ctx):
         """Command for users to input their car information"""
-        await ctx.send("Please select your car model:", view=CarBrands())
+        await ctx.send("Please select your car model:", view=CarBrands(), ephemeral=True) # Send message with buttons to select car brand and model
 
-    # Command for users to display their car information. WIP.
+    # Command for users to display their car information. SEE:
     @commands.command()
     async def mycar(self, ctx):
         """Command for users to display their car information"""
         # Pull car data from database and use embed for display.
         await ctx.send("NOT IMPLEMENTED YET")
     
-    # Command for setting up the database connection, Summons button to allow for Modal based input. WIP
+    # Command for setting up the database connection, Summons button to allow for Modal based input. SEE: database_obj.py
     @commands.command()
     async def db(self, ctx):
         """Command for setting up the database connection"""
-        await ctx.send(view=dbbuttons())
+        await ctx.send(view=dbbuttons(), ephemeral=True) # Send message with buttons to setup database connection and test connection using provided credentials

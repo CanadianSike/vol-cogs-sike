@@ -1,0 +1,21 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Enabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "sshOptions": {
+                "port": 22,
+                "privateKeyPath": "/home/sikepc/Downloads/ssh-key-2026-03-03.key",
+                "username": "rocky",
+                "host": "170.9.43.88"
+            },
+            "driver": "PostgreSQL",
+            "name": "DR",
+            "username": "rocky",
+            "database": "rocky"
+        }
+    ]
+}

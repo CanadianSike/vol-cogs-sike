@@ -1,4 +1,5 @@
 import discord
+from discord import ui
 
 
 
@@ -20,12 +21,40 @@ class ModelButtons(discord.ui.View):
 
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaSuvList())
+        await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
     async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=MazdaCarList())
+
+class IsTunedButtons(discord.ui.View):
+#*************************************************************************************************
+# This class will create buttons to ask if the user's car is tuned or not. This will be used to determine if the user needs to input their tune revision or not.
+#*************************************************************************************************
+# 
+    @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
+    async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=TuneRevisionInput(), ephemeral=True)
+
+    @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
+    async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(ephemeral=True)
+
+
+class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
+    """Modal for inputting tune revision."""
+    tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
+
+
+
+
+#*************************************************************************************************
+#
+# FROM HERE AND BELOW IS FOR CAR SELECTION CLASSES.
+#
+#*************************************************************************************************
+
 
 
 
@@ -44,7 +73,8 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="Miata", description="Sports car")])
     async def model_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_model = select.values[0] # Store selected model for later use
-        await interaction.response.defer()
+        await interaction.response.defer() # Defer response to allow for confirmation without sending multiple messages
+
     # Engine Size Selection.
     @discord.ui.select(placeholder="Select engine size", options=[
         discord.SelectOption(label="1.5L", description="1.5L engine option"),
@@ -53,13 +83,15 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_engine = select.values[0] # Store selected engine for later use
-        await interaction.response.defer()
+        await interaction.response.defer() # Defer response to allow for confirmation without sending multiple messages
 
-    @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
+    # Back button to return to model selection view
+    @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary) # Button to return to model selection view
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons())
+        await interaction.response.send_message(view=ModelButtons()) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
 
-    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
+    # Confirm button to finalize selection and display chosen model and engine
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success) # Button to confirm selection and display chosen model and engine
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
             await interaction.response.send_message(f"Car selection confirmed: {self.selected_model} with {self.selected_engine} engine.", ephemeral=True)
@@ -84,7 +116,7 @@ class MazdaSuvList(discord.ui.View):
         discord.SelectOption(label="CX-90", description="Full-size SUV")])
     async def suv_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_model = select.values[0] # Store selected model for later use
-        await interaction.response.defer()
+        await interaction.response.defer() # Defer response to allow for engine selection without sending multiple messages SEE: engine_select_callback below
 
     # Engine Size Selection.
     @discord.ui.select(placeholder="Select engine size", options=[
@@ -93,12 +125,14 @@ class MazdaSuvList(discord.ui.View):
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def suv_engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         self.selected_engine = select.values[0] # Store selected engine for later use
-        await interaction.response.defer()
+        await interaction.response.defer() # Defer response to allow for confirmation without sending multiple messages SEE: confirm_callback below
 
-    @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary)
+    # Back button to return to model selection view
+    @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary) # Button to return to model selection view
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons())
+        await interaction.response.send_message(view=ModelButtons()) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
 
+    # Confirm button to finalize selection and display chosen model and engine
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
