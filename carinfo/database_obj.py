@@ -4,15 +4,7 @@ import psycopg2
 import redbot.core
 
 
-def db_connection_info():
-    """Function to retrieve database connection info from the DatabaseSetup Modal inputs."""
-    return {
-        "dbname": DatabaseSetup.db_name.value, # Database name from Modal input
-        "user": DatabaseSetup.db_user.value, # Database username from Modal input
-        "password": DatabaseSetup.db_password.value, # Database password from Modal input
-        "host": DatabaseSetup.db_host.value, # Database host from Modal input
-        "port": DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
-    }
+
 
 
 # Class for calling button to summon Modal. Allows for database input and connection testing.
@@ -25,7 +17,13 @@ class dbbuttons(discord.ui.View):
         await interaction.response.send_message("Testing database connection...", ephemeral=True)
         try:
             # Attempt to connect to the database using the provided credentials
-            connection = psycopg2.connect(**db_connection_info())
+            connection = psycopg2.connect(
+                dbname=DatabaseSetup.db_name.value, # Database name from Modal input
+                user=DatabaseSetup.db_user.value, # Database username from Modal input
+                password=DatabaseSetup.db_password.value, # Database password from Modal input
+                host=DatabaseSetup.db_host.value, # Database host from Modal input
+                port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
+            )
             cur = connection.cursor()
             cur.execute("SELECT version();")
             cur.execute()
