@@ -4,40 +4,31 @@ import asyncio
 from . import database_obj
 
 
+#*************************************************************************************************
+def __init__ (self, userid, selected_brand, selected_model, selected_engine):
+    super().__init__()
+    self.userid = userid
+    self.selected_brand = selected_brand
+    self.selected_model = selected_model
+    self.selected_engine = selected_engine
+
+
+#*************************************************************************************************
+
 class CarBrands(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available car models.
 #*************************************************************************************************
-    def __init__ (self, selected_brand):
-        super().__init__()
+    def __init__(self, selected_brand):
         self.selected_brand = selected_brand
+
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
-        await self.selected_brand = "Mazda"
+        selected_brand = "Mazda"
     @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
     async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Sorry, eh", ephemeral=True)
-
-class ModelButtons(discord.ui.View):
-#*************************************************************************************************
-# Buttons will be called to select car catagory. SUV/CAR/ETC
-#*************************************************************************************************
-    def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-        super().__init__()
-        self.userid = userid
-        self.selected_brand = selected_brand
-        self.selected_model = selected_model
-        self.selected_engine = selected_engine
-
-    @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
-    async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
-
-    # Mazda Sedan/Hatchback/Coupe Button
-    @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
-    async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaCarList(), ephemeral=True)
 
 
 
@@ -45,12 +36,7 @@ class MazdaCarList(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available Mazda Car models.
 #*************************************************************************************************
-    def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-        super().__init__()
-        self.userid = userid
-        self.selected_brand = selected_brand
-        self.selected_model = selected_model
-        self.selected_engine = selected_engine
+
     # Mazda Car Model Selection.
     @discord.ui.select(placeholder="Select yourmodel", options=[
         discord.SelectOption(label="Mazda 2", description="Subcompact sedan/hatchback"),
@@ -91,12 +77,7 @@ class MazdaSuvList(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available Mazda SUV models.
 #*************************************************************************************************
-    def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-        super().__init__()
-        self.userid = userid
-        self.selected_brand = selected_brand
-        self.selected_model = selected_model
-        self.selected_engine = selected_engine
+
     # Mazda SUV Model Selection.
     @discord.ui.select(placeholder="Select your SUV model", options=[
         discord.SelectOption(label="CX-3", description="Subcompact SUV"),
@@ -135,12 +116,6 @@ class ToyotaCarList(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available Toyota Car models.
 #*************************************************************************************************
-    def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-        super().__init__()
-        self.userid = userid
-        self.selected_brand = selected_brand
-        self.selected_model = selected_model
-        self.selected_engine = selected_engine
     # Toyota Car Model Selection.
     @discord.ui.select(placeholder="Select your Toyota model", options=[
         discord.SelectOption(label="Corolla", description="Compact sedan/hatchback"),
@@ -158,17 +133,25 @@ class ToyotaCarList(discord.ui.View):
         await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
 
 
+class ModelButtons(discord.ui.View):
+#*************************************************************************************************
+# Buttons will be called to select car catagory. SUV/CAR/ETC
+#*************************************************************************************************
+# 
+    @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
+    async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
+
+    # Mazda Sedan/Hatchback/Coupe Button
+    @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
+    async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=MazdaCarList(), ephemeral=True)
 
 class IsTunedButtons(discord.ui.View):
 #*************************************************************************************************
 # This class will create buttons to ask if the user's car is tuned or not. This will be used to determine if the user needs to input their tune revision or not.
 #*************************************************************************************************
-    def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-        super().__init__()
-        self.userid = userid
-        self.selected_brand = selected_brand
-        self.selected_model = selected_model
-        self.selected_engine = selected_engine
+# 
     @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
     async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_modal(TuneRevisionInput())
@@ -186,4 +169,6 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
         await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
         user_id = interaction.user.id # Get user ID from interaction
         await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
-
+        await asyncio.sleep(1) # Sleep for a moment to ensure the previous message is sent before attempting to send the tune revision information to the database
+        await interaction.followup.send(f"{user_id},{self.selected_brand},{self.selected_model}, {self.selected_engine}, {self.tune_revision.value}")
+        

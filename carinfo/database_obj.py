@@ -3,8 +3,6 @@ from discord import ui
 import psycopg2
 import redbot.core
 
-
-
 # Class for calling button to summon Modal. Allows for database input and connection testing.
 class dbbuttons(discord.ui.View):
     @discord.ui.button(label="Setup Database Connection", style=discord.ButtonStyle.primary) # Button to summon DatabaseSetup Modal
@@ -65,13 +63,7 @@ def user_info_to_database(user_id, car_brand, car_model, engine_size, tune_revis
     try:
     
         # Attempt to connect to the database using the provided credentials
-        connection = psycopg2.connect(
-        dbname=DatabaseSetup.db_name.value, # Database name from Modal input
-        user=DatabaseSetup.db_user.value, # Database username from Modal input
-        password=DatabaseSetup.db_password.value, # Database password from Modal input
-        host=DatabaseSetup.db_host.value, # Database host from Modal input
-        port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
-        )
+        connection = psycopg2.connect(**db_con_info)
         cur = connection.cursor()
         cur.execute('INSERT INTO %s (user_id, car_brand, car_model, engine_size, tune_revision) VALUES (%s, %s, %s, %s, %s)', (user_id, car_brand, car_model, engine_size, tune_revision)) # Example query to insert user info into database table
 
