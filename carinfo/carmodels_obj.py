@@ -15,7 +15,7 @@ class CarBrands(discord.ui.View):
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
-    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary, button_response= "Mazda")
     async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Sorry, eh", ephemeral=True)
 
@@ -48,7 +48,7 @@ class IsTunedButtons(discord.ui.View):
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(ephemeral=True)
 
-class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
+class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input", selected_model=None, selected_engine=None):
     """Modal for inputting tune revision."""
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
@@ -57,7 +57,7 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
         user_id = interaction.user.id # Get user ID from interaction
         await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
         await asyncio.sleep(1) # Sleep for a moment to ensure the previous message is sent before attempting to send the tune revision information to the database
-        await database_obj.UserInfoToDatabase(user_id, "Mazda", self.selected_model, self.selected_engine, self.tune_revision.value) # Call the function to send user info to database
+        await database_obj.user_info_to_database(user_id, "Mazda", self.selected_model, self.selected_engine, self.tune_revision.value) # Call the function to send user info to database
 #*************************************************************************************************
 #
 # FROM HERE AND BELOW IS FOR CAR SELECTION CLASSES.

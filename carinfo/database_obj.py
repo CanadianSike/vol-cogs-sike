@@ -3,17 +3,6 @@ from discord import ui
 import psycopg2
 import redbot.core
 
-#*****************************************************************************************
-# Database connection info
-#*****************************************************************************************
-db_con_info = {
-    "dbname": DatabaseSetup.db_name.value, # Database name
-    "user": DatabaseSetup.db_user.value, # Database user
-    "password": DatabaseSetup.db_password.value, # Database password
-    "host": DatabaseSetup.db_host.value, # Database host IP/URL
-    "port": DatabaseSetup.db_port.value # Database port, default is usually 5432 for PostgreSQL
-}
-#*****************************************************************************************
 
 
 # Class for calling button to summon Modal. Allows for database input and connection testing.
@@ -41,12 +30,7 @@ class dbbuttons(discord.ui.View):
         await interaction.response.send_message("Querying database tables...", ephemeral=True)
         try:
             # Attempt to connect to the database using the provided credentials
-            connection = psycopg2.connect(
-                dbname=DatabaseSetup.db_name.value, # Database name from Modal input
-                user=DatabaseSetup.db_user.value, # Database username from Modal input
-                password=DatabaseSetup.db_password.value, # Database password from Modal input
-                host=DatabaseSetup.db_host.value, # Database host from Modal input
-                port=DatabaseSetup.db_port.value # Database port from Modal input (typically 5432 for PostgreSQL)
+            connection = psycopg2.connect(**db_con_info
             )
             cur = connection.cursor()
             cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';") # Query to get list of tables in the .public schema
@@ -97,3 +81,17 @@ def user_info_to_database(user_id, car_brand, car_model, engine_size, tune_revis
         if connection:
             connection.commit() # Commit changes to the database
             connection.close() # Close the database connection
+
+
+
+#*****************************************************************************************
+# Database connection info
+#*****************************************************************************************
+db_con_info = {
+    "dbname": DatabaseSetup.db_name.value, # Database name
+    "user": DatabaseSetup.db_user.value, # Database user
+    "password": DatabaseSetup.db_password.value, # Database password
+    "host": DatabaseSetup.db_host.value, # Database host IP/URL
+    "port": DatabaseSetup.db_port.value # Database port, default is usually 5432 for PostgreSQL
+}
+#*****************************************************************************************
