@@ -48,7 +48,7 @@ class IsTunedButtons(discord.ui.View):
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(ephemeral=True)
 
-class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input", selected_model=None, selected_engine=None):
+class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     """Modal for inputting tune revision."""
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
