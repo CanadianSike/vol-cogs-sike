@@ -19,12 +19,12 @@ class CarBrands(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available car models.
 #*************************************************************************************************
-    def __init__(self, selected_brand):
+    def __init__(self):
         self.selected_brand = None
 
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.selected_brand = ("Mazda")
+        self.selected_brand = "Mazda"
         await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
 
     @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
