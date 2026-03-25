@@ -4,15 +4,24 @@ import asyncio
 from . import database_obj
 
 
-#*************************************************************************************************
-
-
-
-#*************************************************************************************************
-
 class CarBrands(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available car models.
+#*************************************************************************************************
+    def __init__ (self, selected_brand):
+        super().__init__()
+        self.selected_brand = selected_brand
+    @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
+    async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
+        self.selected_brand = "Mazda"
+    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
+    async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("Sorry, eh", ephemeral=True)
+
+class ModelButtons(discord.ui.View):
+#*************************************************************************************************
+# Buttons will be called to select car catagory. SUV/CAR/ETC
 #*************************************************************************************************
     def __init__ (self, userid, selected_brand, selected_model, selected_engine):
         super().__init__()
@@ -20,12 +29,15 @@ class CarBrands(discord.ui.View):
         self.selected_brand = selected_brand
         self.selected_model = selected_model
         self.selected_engine = selected_engine
-    @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
-    async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
-    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
-    async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("Sorry, eh", ephemeral=True)
+
+    @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
+    async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
+
+    # Mazda Sedan/Hatchback/Coupe Button
+    @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
+    async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=MazdaCarList(), ephemeral=True)
 
 
 
@@ -146,25 +158,6 @@ class ToyotaCarList(discord.ui.View):
         await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
 
 
-class ModelButtons(discord.ui.View):
-#*************************************************************************************************
-# Buttons will be called to select car catagory. SUV/CAR/ETC
-#*************************************************************************************************
-    def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-        super().__init__()
-        self.userid = userid
-        self.selected_brand = selected_brand
-        self.selected_model = selected_model
-        self.selected_engine = selected_engine
-
-    @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
-    async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
-
-    # Mazda Sedan/Hatchback/Coupe Button
-    @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
-    async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaCarList(), ephemeral=True)
 
 class IsTunedButtons(discord.ui.View):
 #*************************************************************************************************
