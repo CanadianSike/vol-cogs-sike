@@ -163,7 +163,7 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
         user_id = interaction.user.id # Get user ID from interaction
         await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
         await asyncio.sleep(1) # Sleep for a moment to ensure the previous message is sent before attempting to send the tune revision information to the database
-        self.selected_brand = CarBrands.selected_brand
+        self.selected_brand = CarBrands.self.selected_brand
         self.selected_model = MazdaCarList(self.selected_model)
         self.selected_engine = MazdaCarList(self.selected_engine)
         await interaction.followup.send(f"{user_id},{self.selected_brand},{self.selected_model}, {self.selected_engine}, {self.tune_revision.value}")
