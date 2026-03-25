@@ -15,7 +15,7 @@ class CarBrands(discord.ui.View):
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
-    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary, button_response= "Mazda")
+    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
     async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Sorry, eh", ephemeral=True)
 
