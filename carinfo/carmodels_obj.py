@@ -4,66 +4,26 @@ import asyncio
 from . import database_obj
 
 
-
-#*************************************************************************************************
-#IMPORTANT VARIABLES
-#*************************************************************************************************
-
-
-#*************************************************************************************************
-class CarBrands(discord.ui.View):
-    @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
-    async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
-    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
-    async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("Sorry, eh", ephemeral=True)
-
-
-class ModelButtons(discord.ui.View):
-#*************************************************************************************************
-# Buttons will be called to select car catagory. SUV/CAR/ETC
-#*************************************************************************************************
-# 
-    @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
-    async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
-
-    # Mazda Sedan/Hatchback/Coupe Button
-    @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
-    async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=MazdaCarList(), ephemeral=True)
-
-class IsTunedButtons(discord.ui.View):
-#*************************************************************************************************
-# This class will create buttons to ask if the user's car is tuned or not. This will be used to determine if the user needs to input their tune revision or not.
-#*************************************************************************************************
-# 
-    @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
-    async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(TuneRevisionInput())
-    
-
-    @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
-    async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(ephemeral=True)
-
-class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
-    """Modal for inputting tune revision."""
-    tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
-    async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message("Your information has been saved!", ephemeral=True)
-        await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
-        user_id = interaction.user.id # Get user ID from interaction
-        await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
-        await asyncio.sleep(1) # Sleep for a moment to ensure the previous message is sent before attempting to send the tune revision information to the database
-        await database_obj.user_info_to_database(user_id, "Mazda", self.selected_model, self.selected_engine, self.tune_revision.value) # Call the function to send user info to database
 #*************************************************************************************************
 #
 # FROM HERE AND BELOW IS FOR CAR SELECTION CLASSES.
 #
 #*************************************************************************************************
-#
+
+class CarBrands(discord.ui.View):
+#*************************************************************************************************
+# This class will create a list of available car models.
+#*************************************************************************************************
+    @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
+    async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
+        self.selected_brand = "Mazda"
+    @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
+    async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("Sorry, eh", ephemeral=True)
+        self.selected_brand = "Toyota"
+
+
 
 class MazdaCarList(discord.ui.View):
 #*************************************************************************************************
@@ -164,3 +124,47 @@ class ToyotaCarList(discord.ui.View):
         discord.SelectOption(label="2.0L", description="2.0L engine option")])
     async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
         await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
+
+
+class ModelButtons(discord.ui.View):
+#*************************************************************************************************
+# Buttons will be called to select car catagory. SUV/CAR/ETC
+#*************************************************************************************************
+# 
+    @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
+    async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=MazdaSuvList(), ephemeral=True)
+
+    # Mazda Sedan/Hatchback/Coupe Button
+    @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
+    async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(view=MazdaCarList(), ephemeral=True)
+
+class IsTunedButtons(discord.ui.View):
+#*************************************************************************************************
+# This class will create buttons to ask if the user's car is tuned or not. This will be used to determine if the user needs to input their tune revision or not.
+#*************************************************************************************************
+# 
+    @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
+    async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(TuneRevisionInput())
+    
+
+    @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
+    async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message(ephemeral=True)
+
+class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
+    """Modal for inputting tune revision."""
+    tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message("Your information has been saved!", ephemeral=True)
+        await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
+        user_id = interaction.user.id # Get user ID from interaction
+        await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
+        await asyncio.sleep(1) # Sleep for a moment to ensure the previous message is sent before attempting to send the tune revision information to the database
+        self.selected_brand = CarBrands(self.selected_brand)
+        self.selected_model = MazdaCarList(self.selected_model)
+        self.selected_engine = MazdaCarList(self.selected_engine)
+        await interaction.followup.send(f"{user_id},{self.selected_brand},{self.selected_model}, {self.selected_engine}, {self.tune_revision.value}")
+        await database_obj.user_info_to_database(user_id, self.selected_brand, self.selected_model, self.selected_engine, self.tune_revision.value) # Call the function to send user info to database
