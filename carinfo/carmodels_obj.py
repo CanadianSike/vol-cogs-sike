@@ -4,25 +4,27 @@ import asyncio
 from . import database_obj
 
 class UserCarInfo:
-    def __init__(self, vendor, model, engine_size, is_tuned):
-        self.vendor = vendor
-        self.model = model
-        self.engine_size = engine_size
-        self.is_tined = is_tuned
+    # Place holders for car info
+    def __init__(self):
+        self.vendor = None
+        self.model = None
+        self.engine_size = None
+        self.is_tuned = None
 
-class CarBrands(discord.ui.View, UserCarInfo):
 #*************************************************************************************************
 # This class will create a list of available car models.
 #*************************************************************************************************
+class CarBrands(discord.ui.View):
+    def __init__(self, car_obj):
+        super().__init__()
+        self.car = car_obj
+
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.selected_brand = "Mazda"
-        await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
-        def __init__(self, vendor):
-            super().__init__(vendor)
-            vendor = "Mazda"
-    async def response_test(ctx, self, vendor):
-        self.ctx.send(f"{vendor}")
+        self.car.vendor = "Mazda"
+        next_option = MazdaCarList(self.car)
+        await interaction.response.edit_message(view=next_option, ephemeral=True)
+
             
 
     @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
