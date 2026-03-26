@@ -42,12 +42,12 @@ class ModelButtons(discord.ui.View):
 
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(view=MazdaSuvList())
+        await interaction.response.edit_message(view=MazdaSuvList(self.car))
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
     async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(view=MazdaCarList())
+        await interaction.response.edit_message(view=MazdaCarList(self.car))
 
 #*************************************************************************************************
 # This class will create a list of available Mazda Car models.
