@@ -23,7 +23,7 @@ class CarBrands(discord.ui.View):
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.car.vendor = "Mazda"
         next_option = MazdaCarList(self.car)
-        await interaction.response.edit_message(view=next_option, ephemeral=True)
+        await interaction.response.edit_message(view=next_option)
 
             
 
@@ -63,13 +63,13 @@ class MazdaCarList(discord.ui.View):
     # Back button to return to model selection view
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary) # Button to return to model selection view
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons()) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
+        await interaction.response.edit_message(view=ModelButtons()) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
 
     # Confirm button to finalize selection and display chosen model and engine
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success) # Button to confirm selection and display chosen model and engine
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
-            await interaction.response.send_message(view=IsTunedButtons(), ephemeral=True)
+            await interaction.response.edit_message(view=IsTunedButtons())
         else:
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
