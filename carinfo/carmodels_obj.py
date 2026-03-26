@@ -3,7 +3,14 @@ from discord import ui
 import asyncio
 from . import database_obj
 
-class CarBrands(discord.ui.View):
+class UserCarInfo:
+    def __init__(self, vendor, model, engine_size, is_tuned):
+        self.vendor = vendor
+        self.model = model
+        self.engine_size = engine_size
+        self.is_tined = is_tuned
+
+class CarBrands(discord.ui.View, UserCarInfo):
 #*************************************************************************************************
 # This class will create a list of available car models.
 #*************************************************************************************************
@@ -11,6 +18,10 @@ class CarBrands(discord.ui.View):
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.selected_brand = "Mazda"
         await interaction.response.send_message(view=ModelButtons(), ephemeral=True)
+        def __init__(self, vendor):
+            super().__init__(vendor)
+            self.vendor = "Mazda"
+            
 
     @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
     async def toyota_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
