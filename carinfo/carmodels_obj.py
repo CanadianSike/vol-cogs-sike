@@ -194,7 +194,8 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
                 f"Vendor: {self.car.vendor}\n"
                 f"Model: {self.car.model}\n"
                 f"Engine: {self.car.engine_size}\n"
-                f"Tuned: {self.car.is_tuned}")
+                f"Tuned: {self.car.is_tuned}\n"
+                f"Userid: {self.car.user_id}")
             
             await interaction.response.send_message(msg)
 
