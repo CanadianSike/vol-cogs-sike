@@ -3,25 +3,10 @@ from discord import ui
 import asyncio
 from . import database_obj
 
-
-#*************************************************************************************************
-def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-    super().__init__()
-    self.userid = userid
-    self.selected_brand = selected_brand
-    self.selected_model = selected_model
-    self.selected_engine = selected_engine
-
-
-#*************************************************************************************************
-
 class CarBrands(discord.ui.View):
 #*************************************************************************************************
 # This class will create a list of available car models.
 #*************************************************************************************************
-    def __init__(self):
-        self.selected_brand = None
-
     @discord.ui.button(label="Mazda", style=discord.ButtonStyle.primary)
     async def mazda_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.selected_brand = "Mazda"
@@ -163,12 +148,6 @@ class IsTunedButtons(discord.ui.View):
         await interaction.response.send_message(ephemeral=True)
 
 class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
-    def __init__ (self, userid, selected_brand, selected_model, selected_engine):
-        super().__init__()
-        self.userid = userid
-        self.selected_brand = selected_brand
-        self.selected_model = selected_model
-        self.selected_engine = selected_engine
     """Modal for inputting tune revision."""
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
