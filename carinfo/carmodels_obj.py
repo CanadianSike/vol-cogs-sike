@@ -22,7 +22,7 @@ class CarBrands(discord.ui.View, UserCarInfo):
             super().__init__(vendor)
             vendor = "Mazda"
     async def response_test(ctx, self, vendor):
-        ctx.send(f"{vendor}")
+        self.ctx.send(f"{vendor}")
             
 
     @discord.ui.button(label="Toyota", style=discord.ButtonStyle.primary)
@@ -167,7 +167,7 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
         await interaction.response.send_message("Your information has been saved!", ephemeral=True)
         await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
         user_id = interaction.user.id # Get user ID from interaction
-        await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
+        #await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
 
 
         
