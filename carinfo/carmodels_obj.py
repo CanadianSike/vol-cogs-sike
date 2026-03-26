@@ -80,14 +80,15 @@ class MazdaCarList(discord.ui.View):
     # Back button to return to model selection view
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary) # Button to return to model selection view
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(view=ModelButtons()) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
+        back_option = ModelButtons(self.car)
+        await interaction.response.edit_message(view=back_option) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
 
     # Confirm button to finalize selection and display chosen model and engine
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success) # Button to confirm selection and display chosen model and engine
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
             next_option = IsTunedButtons(self.car)
-            await interaction.response.edit_message(view=next_option())
+            await interaction.response.edit_message(view=next_option)
         else:
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
@@ -125,13 +126,14 @@ class MazdaSuvList(discord.ui.View):
     # Back button to return to model selection view
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary) # Button to return to model selection view
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(view=ModelButtons()) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
+        back_option = (ModelButtons(self.car))
+        await interaction.response.edit_message(view=back_option) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
 
     # Confirm button to finalize selection and display chosen model and engine
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
-            await interaction.response.send_message(view=IsTunedButtons(), ephemeral=True)
+            await interaction.response.edit_message(view=IsTunedButtons(self.car))
         else:
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
@@ -169,20 +171,24 @@ class IsTunedButtons(discord.ui.View):
 
     @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
     async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(TuneRevisionInput())
+        await interaction.response.send_modal(TuneRevisionInput(self.car))
     
     @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(ephemeral=True)
 
 class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
+    def __init__(self, car_obj):
+        super().__init__()
+        self.car = car_obj
+
     """Modal for inputting tune revision."""
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message("Your information has been saved!", ephemeral=True)
         await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
-        user_id = interaction.user.id # Get user ID from interaction
-        #await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
+        self.car.user_id = interaction.user.id # Get user ID from interaction
+        await interaction.followup.send(f"Your tune revision: {self.tune_revision.value} and user ID: {user_id}", ephemeral=True) #! Remove after testing
 
 
         
