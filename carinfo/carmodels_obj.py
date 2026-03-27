@@ -66,7 +66,7 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="Mazda 6", description="Midsize sedan"),
         discord.SelectOption(label="Miata", description="Sports car")])
     async def model_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        self.car.selected_model = select.values[0] # Store selected model for later use
+        self.car.model = select.values[0] # Store selected model for later use
         await interaction.response.defer() # Defer response to allow for confirmation without sending multiple messages
 
     # Engine Size Selection.
@@ -76,7 +76,7 @@ class MazdaCarList(discord.ui.View):
         discord.SelectOption(label="2.5L", description="2.5L engine option"),
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        self.car.selected_engine = select.values[0] # Store selected engine for later use
+        self.car.engine_size = select.values[0] # Store selected engine for later use
         await interaction.response.defer() # Defer response to allow for confirmation without sending multiple messages
 
     # Back button to return to model selection view
@@ -113,7 +113,7 @@ class MazdaSuvList(discord.ui.View):
         discord.SelectOption(label="CX-9", description="Full-size SUV"),
         discord.SelectOption(label="CX-90", description="Full-size SUV")])
     async def suv_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        self.selected_model = select.values[0] # Store selected model for later use
+        self.car.model = select.values[0] # Store selected model for later use
         await interaction.response.defer() # Defer response to allow for engine selection without sending multiple messages SEE: engine_select_callback below
 
     # Engine Size Selection.
@@ -122,7 +122,7 @@ class MazdaSuvList(discord.ui.View):
         discord.SelectOption(label="2.5L", description="2.5L engine option"),
         discord.SelectOption(label="2.5L Turbo", description="2.5L Turbo engine option")])
     async def suv_engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        self.selected_engine = select.values[0] # Store selected engine for later use
+        self.car.engine_size = select.values[0] # Store selected engine for later use
         await interaction.response.defer() # Defer response to allow for confirmation without sending multiple messages SEE: confirm_callback below
 
     # Back button to return to model selection view
