@@ -166,8 +166,6 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
         self.car.tune_revision = self.tune_revision.value
-        await interaction.response.send_message("Your information has been saved!", ephemeral=True)
-    async def info_test(self, interaction: discord.Interaction):
         summary = (
             f"Heres all the info so far\n"
             f"UserID: {self.car.user_id}\n"
@@ -175,8 +173,9 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
             f"Model: {self.car.model}\n"
             f"Engine: {self.car.engine_size}\n"
             f"Tuned Y/N: {self.car.is_tuned}\n"
+            f"Tune Version: {self.car.tune_revision}"
         )
-        await interaction.response.send_message(summary,view=None)
+        await interaction.response.send_message(summary, ephemeral=True)
 
 
         
