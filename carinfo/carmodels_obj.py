@@ -42,12 +42,12 @@ class ModelButtons(discord.ui.View):
 
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(view=MazdaSuvList(self.car))
+        await interaction.response.edit_message("Select your Model and Engine:",view=MazdaSuvList(self.car))
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
     async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(view=MazdaCarList(self.car))
+        await interaction.response.edit_message("Select your Model and Engine:",view=MazdaCarList(self.car))
 
 #*************************************************************************************************
 # This class will create a list of available Mazda Car models.
@@ -88,7 +88,7 @@ class MazdaCarList(discord.ui.View):
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self.car, 'selected_model') and hasattr(self.car, 'selected_engine'):
             next_option = IsTunedButtons(self.car)
-            await interaction.response.edit_message(view=next_option)
+            await interaction.response.edit_message("Are you currently tuned?",view=next_option)
         else:
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
@@ -194,7 +194,7 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
                 f"Vendor: {self.car.vendor}\n"
                 f"Model: {self.car.model}\n"
                 f"Engine: {self.car.engine_size}\n"
-                f"Tuned: {self.car.is_tuned}\n"
+                f"Tuned: {self.car.is_tuned}"
                 f"Userid: {self.car.user_id}")
             
             await interaction.response.send_message(msg)
