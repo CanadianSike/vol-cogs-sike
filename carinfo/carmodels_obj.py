@@ -5,8 +5,8 @@ from . import database_obj
 
 class UserCarInfo:
     # Place holders for car info
-    def __init__(self):
-        self.user_id = None
+    def __init__(self, user_id):
+        self.user_id = user_id
         self.vendor = None
         self.model = None
         self.engine_size = None
