@@ -11,6 +11,7 @@ class UserCarInfo:
         self.model = None
         self.engine_size = None
         self.is_tuned = None
+        self.tune_revision = None
 
 #*************************************************************************************************
 # This class will create a list of available car models.
@@ -164,6 +165,7 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     """Modal for inputting tune revision."""
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
+        self.car.tune_revision = self.tune_revision.value
         await interaction.response.send_message("Your information has been saved!", ephemeral=True)
     async def info_test(self, interaction: discord.Interaction):
         summary = (
