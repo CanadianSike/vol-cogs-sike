@@ -42,6 +42,7 @@ class ModelButtons(discord.ui.View):
 
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        next_option=MazdaSuvList(self.car)
         await interaction.response.edit_message(content="Select your Model and Engine:",view=MazdaSuvList(self.car))
 
     # Mazda Sedan/Hatchback/Coupe Button
@@ -126,40 +127,17 @@ class MazdaSuvList(discord.ui.View):
     # Back button to return to model selection view
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary) # Button to return to model selection view
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        back_option = (ModelButtons(self.car))
+        back_option = ModelButtons(self.car)
         await interaction.response.edit_message(view=back_option) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
 
     # Confirm button to finalize selection and display chosen model and engine
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
-            await interaction.response.edit_message(content="Are you currently tuned?",view=IsTunedButtons(self.car))
+            next_option = IsTunedButtons(self.car)
+            await interaction.response.edit_message(content="Are you currently tuned?",view=next_option)
         else:
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
-
-#*************************************************************************************************
-# This class will create a list of available Toyota Car models.
-#*************************************************************************************************
-class ToyotaCarList(discord.ui.View):
-    def __init__(self, car_obj):
-        super().__init__()
-        self.car = car_obj
-
-    # Toyota Car Model Selection.
-    @discord.ui.select(placeholder="Select your Toyota model", options=[
-        discord.SelectOption(label="Corolla", description="Compact sedan/hatchback"),
-        discord.SelectOption(label="Camry", description="Midsize sedan"),
-        discord.SelectOption(label="Supra", description="Sports car")])
-    async def select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        await interaction.response.send_message(f"You selected {select.values[0]}!", ephemeral=True)
-
-    # Engine Size Selection.
-    @discord.ui.select(placeholder="Select engine size", options=[
-        discord.SelectOption(label="1.6L Turbo", description="1.6L Turbo engine option"),
-        discord.SelectOption(label="1.8L", description="1.8L engine option"),
-        discord.SelectOption(label="2.0L", description="2.0L engine option")])
-    async def engine_select_callback(self, interaction: discord.Interaction, select: discord.ui.Select):
-        await interaction.response.send_message(f"You selected {select.values[0]} engine!", ephemeral=True)
 
 #*************************************************************************************************
 # This class will create buttons to ask if the user's car is tuned or not. This will be used to determine if the user needs to input their tune revision or not.
@@ -171,7 +149,8 @@ class IsTunedButtons(discord.ui.View):
 
     @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
     async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(TuneRevisionInput(self.car))
+        next_option = TuneRevisionInput(self.car)
+        await interaction.response.send_modal(next_option)
     
     @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -186,17 +165,16 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message("Your information has been saved!", ephemeral=True)
-        await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
-        async def test_usercarinfo(self, interaction: discord.Interaction):
-            # All the info is right here in one spot!
-            msg = (f"Final Summary:\n"
-                f"Vendor: {self.car.vendor}\n"
-                f"Model: {self.car.model}\n"
-                f"Engine: {self.car.engine_size}\n"
-                f"Tuned: {self.car.is_tuned}"
-                f"Userid: {self.car.user_id}")
-            
-            await interaction.response.send_message(msg)
+    async def info_test(self, interaction: discord.Interaction):
+        summary = (
+            f"Heres all the info so far\n"
+            f"UserID: {self.car.user_id}\n"
+            f"Vendor: {self.car.vendor}\n"
+            f"Model: {self.car.model}\n"
+            f"Engine: {self.car.engine_size}\n"
+            f"Tuned Y/N:{self.car.is_tuned}\n"
+        )
+        await interaction.response.send_message(summary,view=None)
 
 
         
