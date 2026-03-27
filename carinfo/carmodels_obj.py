@@ -88,7 +88,7 @@ class MazdaCarList(discord.ui.View):
     # Confirm button to finalize selection and display chosen model and engine
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success) # Button to confirm selection and display chosen model and engine
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if hasattr(self.car, 'selected_model') and hasattr(self.car, 'selected_engine'):
+        if hasattr(self.car, 'model') and hasattr(self.car, 'engine_size'):
             next_option = IsTunedButtons(self.car)
             await interaction.response.edit_message(content="Are you currently tuned?",view=next_option)
         else:
