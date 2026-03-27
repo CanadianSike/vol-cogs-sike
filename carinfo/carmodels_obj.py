@@ -72,7 +72,7 @@ class MazdaList(discord.ui.View):
     # Back button to return to model selection view
     @discord.ui.button(label="Go back", style=discord.ButtonStyle.secondary) # Button to return to model selection view
     async def back_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        back_option = ModelButtons(self.car)
+        back_option = CarBrands(self.car)
         await interaction.response.edit_message(view=back_option) # Send user back to model selection view when back button is clicked SEE: ModelButtons class above
 
     # Confirm button to finalize selection and display chosen model and engine
@@ -94,13 +94,25 @@ class IsTunedButtons(discord.ui.View):
 
     @discord.ui.button(label="Yes", style=discord.ButtonStyle.success)
     async def yes_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.car.is_tuned = True
         next_option = TuneRevisionInput(self.car)
         await interaction.response.send_modal(next_option)
     
     @discord.ui.button(label="No", style=discord.ButtonStyle.danger)
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(ephemeral=True)
-
+        self.car.is_tuned = False
+        self.car.tune_revision = "N/A"
+        summary = (
+            f"Heres all the info so far\n"
+            f"UserID: {self.car.user_id}\n"
+            f"Vendor: {self.car.vendor}\n"
+            f"Model: {self.car.model}\n"
+            f"Engine: {self.car.engine_size}\n"
+            f"Tuned Y/N: {self.car.is_tuned}\n"
+            f"Tune Version: {self.car.tune_revision}"
+        )
+        await interaction.response.send_message(summary, ephemeral=True)
+        
 class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     def __init__(self, car_obj):
         super().__init__()
