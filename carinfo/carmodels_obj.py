@@ -42,12 +42,12 @@ class ModelButtons(discord.ui.View):
 
     @discord.ui.button(label="SUV", style=discord.ButtonStyle.primary)
     async def suv_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(f"Select your Model and Engine:",view=MazdaSuvList(self.car))
+        await interaction.response.edit_message(content="Select your Model and Engine:",view=MazdaSuvList(self.car))
 
     # Mazda Sedan/Hatchback/Coupe Button
     @discord.ui.button(label="Sedan/Hatchback/Coupe", style=discord.ButtonStyle.primary)
     async def car_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(f"Select your Model and Engine:",view=MazdaCarList(self.car))
+        await interaction.response.edit_message(content="Select your Model and Engine:",view=MazdaCarList(self.car))
 
 #*************************************************************************************************
 # This class will create a list of available Mazda Car models.
@@ -88,7 +88,7 @@ class MazdaCarList(discord.ui.View):
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self.car, 'selected_model') and hasattr(self.car, 'selected_engine'):
             next_option = IsTunedButtons(self.car)
-            await interaction.response.edit_message(f"Are you currently tuned?",view=next_option)
+            await interaction.response.edit_message(content="Are you currently tuned?",view=next_option)
         else:
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
@@ -133,7 +133,7 @@ class MazdaSuvList(discord.ui.View):
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success)
     async def confirm_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         if hasattr(self, 'selected_model') and hasattr(self, 'selected_engine'):
-            await interaction.response.edit_message(view=IsTunedButtons(self.car))
+            await interaction.response.edit_message(content="Are you currently tuned?",view=IsTunedButtons(self.car))
         else:
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
