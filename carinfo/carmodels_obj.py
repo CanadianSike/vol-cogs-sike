@@ -186,7 +186,6 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message("Your information has been saved!", ephemeral=True)
-        self.car.user_id = interaction.user.id # Get user ID from interaction
         await asyncio.sleep(1) # Sleep for a moment to ensure the first message is sent before sending the tune revision information
         async def test_usercarinfo(self, interaction: discord.Interaction):
             # All the info is right here in one spot!
