@@ -2,6 +2,7 @@ import discord
 from discord import ui
 import asyncio
 import database_obj
+from . import database_obj
 
 class UserCarInfo:
     # Place holders for car info
