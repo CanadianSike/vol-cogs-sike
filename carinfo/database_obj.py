@@ -71,7 +71,7 @@ async def sync_car_info(interaction, car_obj):
             connection = psycopg2.connect(**db_con_info)
             cur = connection.cursor()
 
-            sql = """INSERT INTO users (user_id, vendor, model, engine, tuned, revision)
+            sql = """INSERT INTO users (user_id, vendor, model, engine_size, is_tuned, tune_revision)
                     VALUES (%s, %s, %s, %s, %s, %s);"""
             data = (car_obj.user_id, car_obj.vendor, car_obj.model, car_obj.engine_size, car_obj.is_tuned, car_obj.tune_revision)
             
