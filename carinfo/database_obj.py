@@ -102,9 +102,7 @@ async def pull_car_info(interaction, user_id):
         return data
     
     except Exception as e:
-        if interaction:
             await interaction.followup.send(f"Error: {e}")
-        return[]
 #*****************************************************************************************
 # Database connection info
 #*****************************************************************************************

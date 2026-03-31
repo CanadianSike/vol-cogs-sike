@@ -42,7 +42,7 @@ class CarInfo(commands.Cog):
             )
 
         msg = "\n".join(car_info_arrangement)
-        await ctx.send(f"Car**Garage:**\n{msg}")
+        await ctx.send(f"Car **Garage:**\n{msg}")
         
 
     
