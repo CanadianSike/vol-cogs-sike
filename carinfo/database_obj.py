@@ -2,7 +2,6 @@ import discord
 from discord import ui
 import psycopg2
 import redbot.core
-from .carinfo import UserCarInfo
 
 #**********************************************************************************************
 # Class for calling button to summon Modal. Allows for database input and connection testing.
