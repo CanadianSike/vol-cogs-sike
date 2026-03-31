@@ -30,7 +30,7 @@ class CarInfo(commands.Cog):
     @commands.command()
     async def carlist(self, ctx):
         """Command for users to display their list of available cars"""
-        cars = await asyncio.to_thread(database_obj.pull_car_info, ctx.author.id)
+        cars = await database_obj.pull_car_info(None, ctx.author.id)
         car_info_arrangement = []
     
         for i, car in enumerate(cars, 1):
