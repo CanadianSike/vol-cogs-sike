@@ -37,12 +37,12 @@ class CarInfo(commands.Cog):
             vendor, model, engine, tuned, revision = car
             status = "Tuned" if tuned else "Not Tuned"
         
-        car_info_arrangement.append(
-            f"{i}. **{vendor} {model}** ({engine}L) - {status} [{revision}]"
-        )
+            car_info_arrangement.append(
+                f"{i}. **{vendor} {model}** ({engine}L) - {status} [{revision}]"
+            )
 
         msg = "\n".join(car_info_arrangement)
-        await ctx.send(f"🚗 **Garage:**\n{msg}")
+        await ctx.send(f"Car**Garage:**\n{msg}")
         
 
     
