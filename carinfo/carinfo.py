@@ -1,11 +1,13 @@
 from redbot.core import commands
 from redbot.core.utils.views import SetApiModal
-import discord
 from discord import ui
+import asyncio
 
+import database_obj
 from .database_obj import DatabaseSetup
-from .database_obj import dbbuttons
+from .database_obj import dbbuttons, pull_car_info
 from .carmodels_obj import UserCarInfo, CarBrands
+
 
 
 
@@ -26,10 +28,18 @@ class CarInfo(commands.Cog):
 
     # Command for users to display their car information. SEE:
     @commands.command()
-    async def mycar(self, ctx):
-        """Command for users to display their car information"""
-        # Pull car data from database and use embed for display.
-        await ctx.send("NOT IMPLEMENTED YET")
+    async def listcars(self, ctx):
+        """Command for users to display their list of available cars"""
+        cars = await asyncio.to_thread(database_obj.pull_car_info, ctx.author.id)
+        if not cars:
+            return await ctx.send("Bruh, no car.")
+        car_info_arrangement = []
+        for i, car in enumerate(cars, 1):
+            vendor, model, engine, tuned, revision = car
+            status = "Tuned" if tuned else "Not Tuned"
+            cars.append(f"{i}. **{vendor}, **{model}, **{engine}, - {status} [{revision}]")
+            msg = "\n".join(cars)
+            await ctx.send(f"**Garage:\n{msg}")
     
     # Command for setting up the database connection, Summons button to allow for Modal based input. SEE: database_obj.py
     @commands.command()

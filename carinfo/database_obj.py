@@ -47,8 +47,6 @@ class dbbuttons(discord.ui.View):
             await interaction.followup.send(f"Error occurred while querying database: {e}", ephemeral=True) # If query fails, send error message with error log
 
 
-
-
 #**********************************************************************************************
 # Class for database credentials and connection pool info. 
 #**********************************************************************************************
@@ -84,6 +82,23 @@ async def sync_car_info(interaction, car_obj):
     except Exception as e:
         await interaction.followup.send(f"Error: {e}")
 
+#*****************************************************************************************
+# Pull user info from Database
+#*****************************************************************************************
+def pull_car_info(interaction, user_id):
+    try: 
+        def pull_cars():
+            connection = psycopg2.connect(**db_con_info)
+            cur = connection.cursor()
+
+            sql = """SELECT vendor, model, engine_size, is_tuned, tune_revision FROM users"""
+            
+            cur.execute(sql,(user_id,))
+            cur.close()
+            connection.close()
+        return pull_cars
+    except Exception as e:
+        await interaction.followup.send(f"Error: {e}")
 #*****************************************************************************************
 # Database connection info
 #*****************************************************************************************
