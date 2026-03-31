@@ -103,7 +103,7 @@ class IsTunedButtons(discord.ui.View):
         self.car.is_tuned = False
         self.car.tune_revision = "N/A"
         await interaction.response.defer(ephemeral=True)
-        asyncio.to_thread(database_obj.sync_car_info, self.car)
+        await asyncio.to_thread(database_obj.sync_car_info, self.car)
         await interaction.followup.send("Car data saved to DB")
 
 class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):

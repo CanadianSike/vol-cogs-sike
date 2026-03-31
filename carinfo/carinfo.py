@@ -14,14 +14,14 @@ class CarInfo(commands.Cog):
     """Cog for keeping track of mods and tune revision(s) per user"""
     def __init__(self, bot):
         self.bot = bot
-        self.garage ={ }
+        self.active_builds = { }
 
     # Command for users to input their car information. SEE: carmodels_obj.py
     @commands.command()
     async def carinfo(self, ctx):
         """Command for users to input their car information"""
         grab_user = UserCarInfo(ctx.author.id)
-        view = self.garage(car_obj=grab_user)
+        view = CarBrands(car_obj=grab_user)
         await ctx.send(view=view) # Send message with buttons to select car brand and model
 
     # Command for users to display their car information. SEE:
