@@ -1,7 +1,7 @@
 import discord
 from discord import ui
 import asyncio
-from . import database_obj
+import database_obj
 
 class UserCarInfo:
     # Place holders for car info
@@ -18,11 +18,11 @@ class UserCarInfo:
 #*************************************************************************************************
 class Garage(discord.ui.View):
 
-    @discord.ui.button(Label="Create new Car", style=discord.ButtonStyle.premium)
+    @discord.ui.button(label="Create new Car", style=discord.ButtonStyle.premium)
     async def create_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         create_car = CarBrands()
         await interaction.response.send_message(view=create_car)
-    @discord.ui.button(Label="Garage", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Garage", style=discord.ButtonStyle.primary)
     async def garage_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message()
     
