@@ -20,9 +20,9 @@ class CarInfo(commands.Cog):
     @commands.command()
     async def carinfo(self, ctx):
         """Command for users to input their car information"""
-        new_car = UserCarInfo(ctx.author.id)
-        view = CarBrands(car_obj=new_car)
-        await ctx.send("Please input your car information:", view=view) # Send message with buttons to select car brand and model
+        grab_user = UserCarInfo(ctx.author.id)
+        view = self.garage(car_obj=grab_user)
+        await ctx.send(view=view) # Send message with buttons to select car brand and model
 
     # Command for users to display their car information. SEE:
     @commands.command()
