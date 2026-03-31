@@ -2,7 +2,6 @@ import discord
 from discord import ui
 import asyncio
 import database_obj
-from .database_obj import database_obj
 
 class UserCarInfo:
     # Place holders for car info
@@ -13,20 +12,6 @@ class UserCarInfo:
         self.engine_size = None
         self.is_tuned = None
         self.tune_revision = None
-
-#*************************************************************************************************
-# This class will be used as the initial action. WIP/UNUSED
-#*************************************************************************************************
-class Garage(discord.ui.View):
-
-    @discord.ui.button(label="Create new Car", style=discord.ButtonStyle.premium)
-    async def create_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        create_car = CarBrands()
-        await interaction.response.send_message(view=create_car)
-    @discord.ui.button(label="Garage", style=discord.ButtonStyle.primary)
-    async def garage_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message()
-    
 
 #*************************************************************************************************
 # This class will create a list of available car models.
