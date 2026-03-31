@@ -116,7 +116,7 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     async def on_submit(self, interaction: discord.Interaction):
         self.car.tune_revision = self.tune_revision.value
         await interaction.response.defer(ephemeral=True)
-        await asyncio.to_thread(database_obj.sync_car_info, self.car)
+        await database_obj.sync_car_info(interaction, self.car)
         await interaction.followup.send("Car data is saved to DB")
 
         
