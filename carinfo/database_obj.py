@@ -85,28 +85,34 @@ async def sync_car_info(interaction, car_obj):
 #*****************************************************************************************
 # Pull user info from Database
 #*****************************************************************************************
-def pull_car_info(interaction, user_id):
+async def pull_car_info(interaction, user_id):
     try: 
-        def pull_cars():
+        def pull():
             connection = psycopg2.connect(**db_con_info)
             cur = connection.cursor()
 
-            sql = """SELECT vendor, model, engine_size, is_tuned, tune_revision FROM users"""
+            sql = """SELECT vendor, model, engine_size, is_tuned, tune_revision FROM users WHERE user_id = %s;"""
             
             cur.execute(sql,(user_id,))
+            rows = cur.fetchall()
             cur.close()
             connection.close()
-        return pull_cars
+            return rows
+        data = await asyncio.to_thread(pull)
+        return data
+    
     except Exception as e:
-        await interaction.followup.send(f"Error: {e}")
+        if interaction:
+            await interaction.followup.send(f"Error: {e}")
+        return[]
 #*****************************************************************************************
 # Database connection info
 #*****************************************************************************************
 db_con_info = {
-    "dbname": DatabaseSetup.db_name.value, # Database name
-    "user": DatabaseSetup.db_user.value, # Database user
-    "password": DatabaseSetup.db_password.value, # Database password
-    "host": DatabaseSetup.db_host.value, # Database host IP/URL
-    "port": DatabaseSetup.db_port.value # Database port, default is usually 5432 for PostgreSQL
+    "dbname": "",
+    "user": "",
+    "password": "",
+    "host": "",
+    "port": ""
 }
 #*****************************************************************************************
