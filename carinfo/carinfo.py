@@ -3,9 +3,9 @@ from redbot.core.utils.views import SetApiModal
 from discord import ui
 import asyncio
 
-import database_obj
+from . import database_obj
 from .database_obj import DatabaseSetup
-from .database_obj import dbbuttons, pull_car_info
+from .database_obj import dbbuttons
 from .carmodels_obj import UserCarInfo, CarBrands
 
 
