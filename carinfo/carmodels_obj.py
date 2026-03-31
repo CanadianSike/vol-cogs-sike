@@ -14,6 +14,20 @@ class UserCarInfo:
         self.tune_revision = None
 
 #*************************************************************************************************
+# This class will be used as the initial action. WIP/UNUSED
+#*************************************************************************************************
+class Garage(discord.ui.View):
+
+    @discord.ui.button(Label="Create new Car", style=discord.ButtonStyle.premium)
+    async def create_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        create_car = CarBrands()
+        await interaction.response.send_message(view=create_car)
+    @discord.ui.button(Label="Garage", style=discord.ButtonStyle.primary)
+    async def garage_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message()
+    
+
+#*************************************************************************************************
 # This class will create a list of available car models.
 #*************************************************************************************************
 class CarBrands(discord.ui.View):
@@ -102,17 +116,10 @@ class IsTunedButtons(discord.ui.View):
     async def no_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.car.is_tuned = False
         self.car.tune_revision = "N/A"
-        summary = (
-            f"Heres all the info so far\n"
-            f"UserID: {self.car.user_id}\n"
-            f"Vendor: {self.car.vendor}\n"
-            f"Model: {self.car.model}\n"
-            f"Engine: {self.car.engine_size}\n"
-            f"Tuned Y/N: {self.car.is_tuned}\n"
-            f"Tune Version: {self.car.tune_revision}"
-        )
-        await interaction.response.send_message(summary, ephemeral=True)
-        
+        await interaction.response.defer(ephemeral=True)
+        asyncio.to_thread(database_obj.sync_car_info, self.car)
+        await interaction.followup.send("Car data saved to DB")
+
 class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     def __init__(self, car_obj):
         super().__init__()
@@ -122,16 +129,8 @@ class TuneRevisionInput(discord.ui.Modal, title="Tune Revision Input"):
     tune_revision = ui.TextInput(label="Tune Revision", placeholder="Enter your tune revision (e.g. v1.0, v1.1, etc.)", required=True)
     async def on_submit(self, interaction: discord.Interaction):
         self.car.tune_revision = self.tune_revision.value
-        summary = (
-            f"Heres all the info so far\n"
-            f"UserID: {self.car.user_id}\n"
-            f"Vendor: {self.car.vendor}\n"
-            f"Model: {self.car.model}\n"
-            f"Engine: {self.car.engine_size}\n"
-            f"Tuned Y/N: {self.car.is_tuned}\n"
-            f"Tune Version: {self.car.tune_revision}"
-        )
-        await interaction.response.send_message(summary, ephemeral=True)
-
+        await interaction.response.defer(ephemeral=True)
+        await asyncio.to_thread(database_obj.sync_car_info, self.car)
+        await interaction.followup.send("Car data is saved to DB")
 
         

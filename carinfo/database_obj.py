@@ -2,12 +2,16 @@ import discord
 from discord import ui
 import psycopg2
 import redbot.core
+from carmodels_obj import UserCarInfo
 
+#**********************************************************************************************
 # Class for calling button to summon Modal. Allows for database input and connection testing.
+#**********************************************************************************************
 class dbbuttons(discord.ui.View):
     @discord.ui.button(label="Setup Database Connection", style=discord.ButtonStyle.primary) # Button to summon DatabaseSetup Modal
     async def setupdb(self, interaction: discord.Interaction, button: discord.ui.Button): # Setup Database button callback
         await interaction.response.send_modal(DatabaseSetup()) # Call DatabaseSetup Modal when button is clicked
+
     @discord.ui.button(label='Test Connection', style=discord.ButtonStyle.secondary)# Button to test database connection using provided credentials
     async def testdb(self, interaction: discord.Interaction, button: discord.ui.Button): # Test Database button callback
         await interaction.response.send_message("Testing database connection...", ephemeral=True)
@@ -45,8 +49,9 @@ class dbbuttons(discord.ui.View):
 
 
 
-
+#**********************************************************************************************
 # Class for database credentials and connection pool info. 
+#**********************************************************************************************
 class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
     """Modal for setting up the database connection."""
     db_name = ui.TextInput(label="Database Name", placeholder="Enter your database name", required=True) # DB name
@@ -57,24 +62,24 @@ class DatabaseSetup(discord.ui.Modal, title="Database Setup"):
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(f"Database Name: {self.db_name.value}, Database User: {self.db_user.value}, Database Host: {self.db_host.value}, Database Port: {self.db_port.value}", ephemeral=True)
 
-
-# Functionfor sending user info to database.
-def user_info_to_database(user_id, car_brand, car_model, engine_size, tune_revision):
+#*****************************************************************************************
+# User Info to Database
+#*****************************************************************************************
+def sync_car_info(car_obj):
     try:
-    
-        # Attempt to connect to the database using the provided credentials
         connection = psycopg2.connect(**db_con_info)
         cur = connection.cursor()
-        cur.execute('INSERT INTO %s (user_id, car_brand, car_model, engine_size, tune_revision) VALUES (%s, %s, %s, %s, %s)', (user_id, car_brand, car_model, engine_size, tune_revision)) # Example query to insert user info into database table
 
+        sql = """INSERT INTO user (user_id, vendor, model, engine, tuned, revision)
+                 VALUES (%s, %s, %s, %s, %s, %s);"""
+        data = (car_obj.user_id, car_obj.vendor, car_obj.model, car_obj.engine, car_obj.is_tuned, car_obj.tune_revision)
+        
+        cur.execute(sql, data)
+        connection.commit()
+        cur.close()
+        connection.close()
     except Exception as e:
-        print(f"Error occurred while inserting user info into database: {e}") # If insertion fails, print error message with error log
-    finally:
-        if connection:
-            connection.commit() # Commit changes to the database
-            connection.close() # Close the database connection
-
-
+        print(f"SQL Error: {e}")
 
 #*****************************************************************************************
 # Database connection info
