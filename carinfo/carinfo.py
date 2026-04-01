@@ -37,7 +37,7 @@ class CarInfo(commands.Cog):
             return await ctx.send("Your garage is empty. You should add some cars!")
         
         embed = discord.Embed(
-            title=f"{ctx.author.diplay_name}'s Garage",
+            title=f"{ctx.author.display_name}'s Garage",
             color=discord.Color.blue()
         )
         embed.set_thummbnail(url=ctx.auther.display_avatar.url)
