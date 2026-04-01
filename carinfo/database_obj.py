@@ -103,6 +103,29 @@ async def pull_car_info(interaction, user_id):
     
     except Exception as e:
             await interaction.followup.send(f"Error: {e}")
+
+#*****************************************************************************************
+# Append user info in database
+#*****************************************************************************************
+async def update_car_info(interaction, new_revision, model, user_id):
+    try:
+        def update():
+            """Updates the revision for a specific car owned by the user."""
+            connection = psycopg2.connect(**db_con_info)
+            cur = connection.cursor()
+
+            sql = """UPDATE users SET tune_revision = %s, is_tuned = True WHERE user_id = %s AND model = %s"""
+
+            cur.execute(sql,(new_revision, model, user_id,))
+            connection.commit()
+            cur.close()
+            connection.close()
+        await asyncio.to_thread(update)
+    except Exception as e:
+        await interaction.followup.send(f"Error: {e}")
+
+
+
 #*****************************************************************************************
 # Database connection info
 #*****************************************************************************************
