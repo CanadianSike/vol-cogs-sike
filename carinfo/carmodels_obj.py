@@ -1,7 +1,8 @@
 import discord
 from discord import ui
 import asyncio
-from . import database_obj
+from carinfo import database_obj
+
 
 class UserCarInfo:
     # Place holders for car info
@@ -85,7 +86,7 @@ class MazdaList(discord.ui.View):
             await interaction.response.send_message("Please select both a model and an engine.", ephemeral=True)
 
 #*************************************************************************************************
-# This class will create buttons to ask if the user's car is tuned or not. This will be used to determine if the user needs to input their tune revision or not.
+# This class will create buttons to ask if the user's car is tuned. This will be used to determine if the user needs to input their tune revision or not.
 #*************************************************************************************************
 class IsTunedButtons(discord.ui.View):
     def __init__(self, car_obj):
