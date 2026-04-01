@@ -56,17 +56,13 @@ class CarInfo(commands.Cog):
     @commands.hybrid_command(name = "carrev", description = " Update the Tune Revision of your car!")
     @commands.describe(model_name = """The model of your car. Ex. "Mazda3".""", new_revision = """The new Revision Version. Ex. "V1.0, V2.1" """)
     async def carrev(self, ctx: commands.Context, model_name: str, new_revision: str):
-        await ctx.defer() #THIS IS NEEDED FOR "/" COMMANDS TO WORK IN THIS CONTEXT
-        try: 
-            await database_obj.update_car_info(ctx.interaction, ctx.author.id, model_name, new_revision)
-            await ctx.send(f"✅ Successfully updated **{model_name}** to revision **{new_revision}**!")
-        except Exception as e:
-            await ctx.send(f"❌ Failed to update error: {e}")
-        
-    
+        async with ctx.typing(): #THIS IS NEEDED FOR "/" COMMANDS TO WORK IN THIS CONTEXT
+            try: 
+                await database_obj.update_car_info(ctx.interaction, ctx.author.id, model_name, new_revision)
+                await ctx.send(f"✅ Successfully updated **{model_name}** to revision **{new_revision}**!")
+            except Exception as e:
+                await ctx.senf(f"❌ Failed to update, Error:{e}")
 
-
-        await ctx.send()
 
     # Command for setting up the database connection, Summons button to allow for Modal based input. SEE: database_obj.py
     @commands.command()
