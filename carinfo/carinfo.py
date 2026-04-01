@@ -44,12 +44,12 @@ class CarInfo(commands.Cog):
 
         for car in cars:
             vendor, model, engine, tuned, revision = car
-            status =f"✅ Tuned REV: {revision}" if tuned else "❌ Not Tuned"
+            status =f"✅ Tuned [REV: {revision}]" if tuned else "❌ Not Tuned"
 
             embed.add_field(
-                name = f"{vendor} {model}",
+                name = f"{vendor} {model} {engine}",
                 value = {status},
-                inline = True
+                inline = False
                 )
         await ctx.send(embed=embed)
 
