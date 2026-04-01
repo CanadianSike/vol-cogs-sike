@@ -40,7 +40,7 @@ class CarInfo(commands.Cog):
             title=f"{ctx.author.display_name}'s Garage",
             color=discord.Color.blue()
         )
-        embed.set_thumbnail(url=ctx.auther.display_avatar.url)
+        embed.set_thumbnail(url=ctx.author.display_avatar.url)
 
         for car in cars:
             vendor, model, engine, tuned, revision = car
