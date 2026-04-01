@@ -1,3 +1,4 @@
+import discord
 from redbot.core import commands
 from redbot.core.utils.views import SetApiModal
 from discord import ui
@@ -31,18 +32,31 @@ class CarInfo(commands.Cog):
     async def carlist(self, ctx):
         """Command for users to display their list of available cars"""
         cars = await database_obj.pull_car_info(None, ctx.author.id)
-        car_info_arrangement = []
-    
-        for i, car in enumerate(cars, 1):
+
+        if not cars:
+            return await ctx.send("Your garage is empty. You should add some cars!")
+        
+        embed = discord.Embed(
+            title=f"{ctx.author.diplay_name}'s Garage",
+            color=discord.Color.blue()
+        )
+        embed.set_thummbnail(url=ctx.auther.display_avatar.url)
+
+        for car in cars:
             vendor, model, engine, tuned, revision = car
             status = "Tuned" if tuned else "Not Tuned"
-        
-            car_info_arrangement.append(
-                f"{i}. **{vendor} {model}** ({engine}) - {status} [{revision}]"
-            )
 
-        msg = "\n".join(car_info_arrangement)
-        await ctx.send(f"**Garage:**\n{msg}")
+            embed.add_field(
+                name = f"{vendor} {model}",
+                value = {status},
+                inline = True
+                )
+        await ctx.send(embed=embed)
+        #msg = "\n".join(car_info_arrangement)
+        # await ctx.send(f"**Garage:**\n{msg}")
+        
+
+
         
 
     
