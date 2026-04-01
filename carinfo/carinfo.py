@@ -48,9 +48,9 @@ class CarInfo(commands.Cog):
 
             embed.add_field(
                 name = f"{vendor} {model} {engine}",
-                value = {status},
+                value = status,
                 inline = False
-                )
+            )
         await ctx.send(embed=embed)
 
         
