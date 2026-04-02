@@ -1,7 +1,7 @@
 import discord
 from redbot.core import commands
 from redbot.core.utils.views import SetApiModal
-from discord import ui
+from discord import ui, app_commands
 import asyncio
 
 from . import database_obj
@@ -54,7 +54,7 @@ class CarInfo(commands.Cog):
         await ctx.send(embed=embed) 
     
     @commands.hybrid_command(name = "carrev", description = " Update the Tune Revision of your car!")
-    @commands.describe(model_name = """The model of your car. Ex. "Mazda3".""", new_revision = """The new Revision Version. Ex. "V1.0, V2.1" """)
+    @app_commands.describe(model_name = """The model of your car. Ex. "Mazda3".""", new_revision = """The new Revision Version. Ex. "V1.0, V2.1" """)
     async def carrev(self, ctx: commands.Context, model_name: str, new_revision: str):
         async with ctx.typing(): #THIS IS NEEDED FOR "/" COMMANDS TO WORK IN THIS CONTEXT
             try: 
