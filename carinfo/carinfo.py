@@ -29,7 +29,7 @@ class CarInfo(commands.Cog):
     @commands.command()
     async def carlist(self, ctx):
         """Command for users to display their list of available cars"""
-        cars = await database_obj.pull_car_info(None, ctx.author.id) # Pull all car related info from DB that matches the user's ID
+        cars = await database_obj.pull_car_info(ctx.interaction, ctx.author.id) # Pull all car related info from DB that matches the user's ID
 
         if not cars: # If there is no cars under the user's ID in the DB tell them to add one.
             return await ctx.send("Your garage is empty. You should add some cars!")
