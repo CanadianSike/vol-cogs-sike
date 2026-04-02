@@ -59,7 +59,7 @@ class CarInfo(commands.Cog):
                 await database_obj.update_car_info(ctx.interaction, ctx.author.id, model_name, new_revision)
                 await ctx.send(f"✅ Successfully updated **{model_name}** to revision **{new_revision}**!")
             except Exception as e:
-                await ctx.senf(f"❌ Failed to update, Error:{e}")
+                await ctx.send(f"❌ Failed to update, Error:{e}")
 
 
     # Command for setting up the database connection, Summons button to allow for Modal based input. SEE: database_obj.py
