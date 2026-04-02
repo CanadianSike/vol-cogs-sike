@@ -1,12 +1,10 @@
 import discord
-from redbot.core import commands
-from redbot.core.utils.views import SetApiModal
 from discord import ui, app_commands
-import asyncio
+from redbot.core import commands
 
+from . import carmodels_obj
 from . import database_obj
-from .database_obj import DatabaseSetup
-from .database_obj import dbbuttons
+from .database_obj import dbbuttons, DatabaseSetup
 from .carmodels_obj import UserCarInfo, CarBrands
 
 
