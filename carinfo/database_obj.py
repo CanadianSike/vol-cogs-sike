@@ -32,8 +32,7 @@ class dbbuttons(discord.ui.View):
         await interaction.response.send_message("Querying database tables...", ephemeral=True)
         try:
             # Attempt to connect to the database using the provided credentials
-            connection = psycopg2.connect(**db_con_info
-            )
+            connection = psycopg2.connect(**db_con_info)
             cur = connection.cursor()
             cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';") # Query to get list of tables in the .public schema
             tables = cur.fetchall()
