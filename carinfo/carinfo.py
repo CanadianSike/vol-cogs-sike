@@ -3,7 +3,7 @@ from discord import ui, app_commands
 from redbot.core import commands
 
 from . import carmodels_obj
-from . import database_obj
+import database_obj
 from .database_obj import dbbuttons, DatabaseSetup
 from .carmodels_obj import UserCarInfo, CarBrands
 
