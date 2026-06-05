@@ -3,7 +3,7 @@ from discord import ui, app_commands
 from redbot.core import commands
 
 from . import carmodels_obj
-import database_obj
+from . import database_obj
 from .database_obj import dbbuttons, DatabaseSetup
 from .carmodels_obj import UserCarInfo, CarBrands
 
@@ -29,30 +29,38 @@ class CarInfo(commands.Cog):
     @commands.command()
     async def carremove(self, ctx):
         """Command for users to remove a selected car from their garage"""
-        cars = await database_obj.pull_car_info(ctx.interaction, ctx.author.id) # Pull all car related info from DB that matches the user's ID
+        # Pull car info from DB
+        cars = await database_obj.pull_car_info(ctx.interaction, ctx.author.id) 
+        
+        # Check if the garage is empty
         if not cars:
-            return await ctx.send("Your garage is empy. You should add some cars!")
+            return await ctx.send("Your garage is empty. You should add some cars!")
+        
+        # Create selection menu
         options = [
             discord.SelectOption(
-                label=f"{car[1]},{car[2]}",
-                description=f"Engine:{car[2]}",
+                label=f"{car[0]} {car[1]}", #Vendor and Model (e.g. Mazda Mazda3)
+                description=f"Engine: {car[2]}",
                 value=f"{car[1]}"
             )
             for car in cars
         ]
         
-        select = ui.Select(placeholder="Choose a car to scrap.", options=options)
-
+        # Create selection menu
+        select = ui.Select(placeholder="Choose a car to remove...", options=options)
+        
         async def select_callback(interaction: discord.Interaction):
             selected_model = select.values[0]
-            await interaction.response.send_message(f"**{selected_model}** Has been sent to Harold for scrap!", ephemeral=True)
+            await interaction.response.send_message(
+                f"**{selected_model}** has been sent to Harold for scrap!", 
+                ephemeral=True
+            )
 
-            select.callback = select_callback
+        select.callback = select_callback
+        view = ui.View()
+        view.add_item(select)
+        await ctx.send("Choose a car to scrap from your garage:", view=view)
 
-            view = ui.View()
-            view.add_item(select)
-
-            await ctx.send("Choose a car to scrap from your garage:", view=view)
 
     # Command for users to display their car information. SEE:
     @commands.command()
