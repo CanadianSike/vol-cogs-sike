@@ -25,6 +25,16 @@ class CarInfo(commands.Cog):
         view = CarBrands(car_obj=grab_user)
         await ctx.send(view=view) # Send message with buttons to select car brand and model
 
+    # Command for users to remove a car from their garage.
+    @commands.commands()
+    async def carremove(self, ctx):
+        """Command for users to remove a selected car from their garage"""
+        cars = await database_obj.pull_car_info(ctx.interation, ctx.author.id) # Pull all car related info from DB that matches the user's ID
+
+        if not cars:
+            return await ctx.send("Your garage is empy. You should add some cars!")
+        
+
     # Command for users to display their car information. SEE:
     @commands.command()
     async def carlist(self, ctx):
@@ -45,7 +55,7 @@ class CarInfo(commands.Cog):
             status =f"✅ Tuned [REV: {revision}]" if tuned else "❌ Not Tuned" # Checks is_tuned boolean in DB
 
             embed.add_field(
-                name = f"{vendor} {model} {engine}", # Title row of each car in embed. 
+                name = f"{vendor} \n {model} {engine}", # Title row of each car in embed. Car brand as title while model and engine is listed below. 
                 value = status,                      # Displays tune status and Revision under each car title.
                 inline = False                       # Sets embed to be Vertical and not horizontal.
             )
