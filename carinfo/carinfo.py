@@ -26,14 +26,33 @@ class CarInfo(commands.Cog):
         await ctx.send(view=view) # Send message with buttons to select car brand and model
 
     # Command for users to remove a car from their garage.
-    @commands.commands()
+    @commands.command()
     async def carremove(self, ctx):
         """Command for users to remove a selected car from their garage"""
-        cars = await database_obj.pull_car_info(ctx.interation, ctx.author.id) # Pull all car related info from DB that matches the user's ID
-
+        cars = await database_obj.pull_car_info(ctx.interaction, ctx.author.id) # Pull all car related info from DB that matches the user's ID
         if not cars:
             return await ctx.send("Your garage is empy. You should add some cars!")
+        options = [
+            discord.SelectOption(
+                label=f"{car[1]},{car[2]}",
+                description=f"Engine:{car[2]}",
+                value=f"{car[1]}"
+            )
+            for car in cars
+        ]
         
+        select = ui.Select(placeholder="Choose a car to scrap.", options=options)
+
+        async def select_callback(interaction: discord.Interaction):
+            selected_model = select.values[0]
+            await interaction.response.send_message(f"**{selected_model}** Has been sent to Harold for scrap!", ephemeral=True)
+
+            select.callback = select_callback
+
+            view = ui.View()
+            view.add_item(select)
+
+            await ctx.send("Choose a car to scrap from your garage:", view=view)
 
     # Command for users to display their car information. SEE:
     @commands.command()
